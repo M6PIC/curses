@@ -31,27 +31,24 @@
  * SUCH DAMAGE.
  */
 
-#if HAVE_NBTOOL_CONFIG_H
-#include "nbtool_config.h"
-#endif
-
-#include <sys/cdefs.h>
-__RCSID("$NetBSD: nbperf.c,v 1.5 2013/01/31 16:32:02 joerg Exp $");
-
-#include <sys/endian.h>
 #include <err.h>
 #include <errno.h>
 #include <inttypes.h>
 #include <stdlib.h>
+#include <stdnoreturn.h>
 #include <stdio.h>
 #include <string.h>
 #include <unistd.h>
 
 #include "nbperf.h"
 
+char *getprogname(void);
+uint32_t arc4random(void);
+void mi_vector_hash(const void * __restrict key, size_t len, uint32_t seed, uint32_t hashes[3]);
+
 static int predictable;
 
-static __dead
+static noreturn
 void usage(void)
 {
 	fprintf(stderr,
@@ -60,10 +57,6 @@ void usage(void)
 	    getprogname());
 	exit(1);
 }
-
-#if HAVE_NBTOOL_CONFIG_H && !defined(__NetBSD__)
-#define	arc4random() rand()
-#endif
 
 static void
 mi_vector_hash_seed_hash(struct nbperf *nbperf)

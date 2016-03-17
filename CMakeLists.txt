@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 3.0)
 project(netbsd_curses)
 
 include_directories(after "include")
+include_directories(after "general/include")
 
 add_subdirectory(nbperf)
 add_subdirectory(terminfo)
