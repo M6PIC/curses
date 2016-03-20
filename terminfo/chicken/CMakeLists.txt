@@ -15,7 +15,7 @@ add_custom_command(
 
 add_custom_command(
 	OUTPUT ${PROJECT_BINARY_DIR}/chicken/hash.c
-	COMMAND TOOL_NBPERF=${CMAKE_BINARY_DIR}/nbperf/nbperf ${PROJECT_SOURCE_DIR}/genhash ${PROJECT_SOURCE_DIR}/include/term.h > hash.c
+	COMMAND TOOL_NBPERF=${CMAKE_BINARY_DIR}/nbperf/nbperf ${PROJECT_SOURCE_DIR}/genhash ${CMAKE_SOURCE_DIR}/include/term.h > hash.c
 	)
 
 add_custom_target(

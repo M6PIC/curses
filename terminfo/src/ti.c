@@ -27,9 +27,6 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <sys/cdefs.h>
-__RCSID("$NetBSD: ti.c,v 1.3 2013/06/07 13:16:18 roy Exp $");
-
 #include <assert.h>
 #include <string.h>
 #include <term_private.h>
@@ -42,8 +39,8 @@ ti_getflag(const TERMINAL *term, const char *id)
 	size_t i;
 	TERMUSERDEF *ud;
 
-	_DIAGASSERT(term != NULL);
-	_DIAGASSERT(id != NULL);
+	assert(term != NULL);
+	assert(id != NULL);
 
 	ind = _ti_flagindex(id);
 	if (ind != -1)
@@ -60,7 +57,7 @@ int
 tigetflag(const char *id)
 {
 
-	_DIAGASSERT(id != NULL);
+	assert(id != NULL);
 	if (cur_term != NULL)
 		return ti_getflag(cur_term, id);
 	return ABSENT_BOOLEAN;
@@ -73,8 +70,8 @@ ti_getnum(const TERMINAL *term, const char *id)
 	size_t i;
 	TERMUSERDEF *ud;
 
-	_DIAGASSERT(term != NULL);
-	_DIAGASSERT(id != NULL);
+	assert(term != NULL);
+	assert(id != NULL);
 
 	ind = _ti_numindex(id);
 	if (ind != -1) {
@@ -97,7 +94,7 @@ int
 tigetnum(const char *id)
 {
 
-	_DIAGASSERT(id != NULL);
+	assert(id != NULL);
 	if (cur_term != NULL)
 		return ti_getnum(cur_term, id);
 	return CANCELLED_NUMERIC;
@@ -110,8 +107,8 @@ ti_getstr(const TERMINAL *term, const char *id)
 	size_t i;
 	TERMUSERDEF *ud;
 
-	_DIAGASSERT(term != NULL);
-	_DIAGASSERT(id != NULL);
+	assert(term != NULL);
+	assert(id != NULL);
 
 	ind = _ti_strindex(id);
 	if (ind != -1)
@@ -128,8 +125,8 @@ char *
 tigetstr(const char *id)
 {
 
-	_DIAGASSERT(id != NULL);
+	assert(id != NULL);
 	if (cur_term != NULL)
-		return __UNCONST(ti_getstr(cur_term, id));
+		return (char *)ti_getstr(cur_term, id);
 	return (char *)CANCELLED_STRING;
 }

@@ -27,9 +27,6 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <sys/cdefs.h>
-__RCSID("$NetBSD: term.c,v 1.19 2015/11/26 01:03:22 christos Exp $");
-
 #include <sys/stat.h>
 
 #include <assert.h>
@@ -43,6 +40,8 @@ __RCSID("$NetBSD: term.c,v 1.19 2015/11/26 01:03:22 christos Exp $");
 #include <string.h>
 #include <term_private.h>
 #include <term.h>
+
+#include "endian_conv.h"
 
 #define _PATH_TERMINFO		"/usr/share/misc/terminfo"
 
@@ -358,8 +357,8 @@ _ti_findterm(TERMINAL *term, const char *name, int flags)
 	uint8_t *f;
 	ssize_t len;
 
-	_DIAGASSERT(term != NULL);
-	_DIAGASSERT(name != NULL);
+	assert(term != NULL);
+	assert(name != NULL);
 
 	database[0] = '\0';
 	_ti_database = NULL;
@@ -433,7 +432,7 @@ _ti_getterm(TERMINAL *term, const char *name, int flags)
 	if (r == 1)
 		return r;
 
-	for (i = 0; i < __arraycount(compiled_terms); i++) {
+	for (i = 0; i < (sizeof(compiled_terms) / sizeof(compiled_terms[0])); i++) {
 		t = &compiled_terms[i];
 		if (strcmp(name, t->name) == 0) {
 			r = _ti_readterm(term, t->cap, t->caplen, flags);

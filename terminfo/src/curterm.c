@@ -27,9 +27,6 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <sys/cdefs.h>
-__RCSID("$NetBSD: curterm.c,v 1.11 2015/11/25 18:38:21 christos Exp $");
-
 #include <assert.h>
 #include <stdlib.h>
 #include <string.h>
@@ -51,7 +48,8 @@ TERMINAL *cur_term;
 #define NAMESIZE	256
 char ttytype[NAMESIZE];
 
-static const speed_t bauds[] = {
+#define BAUDS_SIZE 20
+static const speed_t bauds[BAUDS_SIZE] = {
 	0, 50, 75, 110, 134, 150, 200, 300, 600, 1200, 2400, 4800, 9600,
 	19200, 38400, 57600, 115200, 230400, 460800, 921600
 };
@@ -63,12 +61,12 @@ _ti_setospeed(TERMINAL *term)
 	speed_t os;
 	size_t i;
 
-	_DIAGASSERT(term != NULL);
+	assert(term != NULL);
 
 	term->_ospeed = 0;
 	if (tcgetattr(term->fildes, &termios) == 0) {
 		os = cfgetospeed(&termios);
-		for (i = 0; i < __arraycount(bauds); i++)
+		for (i = 0; i < BAUDS_SIZE; i++)
 			if (bauds[i] == os) {
 				term->_ospeed = i;
 				break;
@@ -148,8 +146,8 @@ char *
 termname(void)
 {
 
-        _DIAGASSERT(cur_term != NULL);
-	return __UNCONST(cur_term->name);
+        assert(cur_term != NULL);
+	return (char *)cur_term->name;
 }
 
 static const char * nullname = "";
@@ -158,8 +156,8 @@ char *
 longname(void)
 {
 
-	_DIAGASSERT(cur_term != NULL);
+	assert(cur_term != NULL);
 	if (cur_term->desc == NULL)
-		return __UNCONST(nullname);
-	return __UNCONST(cur_term->desc);
+		return (char *)nullname;
+	return (char *)cur_term->desc;
 }
