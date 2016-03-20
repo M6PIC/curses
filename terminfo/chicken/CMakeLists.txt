@@ -5,7 +5,7 @@ include_directories(after ${PROJECT_BINARY_DIR}/chicken)
 
 add_custom_command(
 	OUTPUT termcap_hash.c
-	COMMAND TOOL_NBPERF=${CMAKE_BINARY_DIR}/nbperf/nbperf ${PROJECT_SOURCE_DIR}/genthash ${PROJECT_SOURCE_DIR}/termcap_map.c > termcap_hash.c
+	COMMAND TOOL_NBPERF=${CMAKE_BINARY_DIR}/nbperf/nbperf ${PROJECT_SOURCE_DIR}/genthash ${PROJECT_SOURCE_DIR}/src/termcap_map.c > termcap_hash.c
 	)
 
 add_custom_command(
