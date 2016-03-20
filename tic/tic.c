@@ -27,19 +27,12 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#if HAVE_NBTOOL_CONFIG_H
-#include "nbtool_config.h"
-#endif
-
-#include <sys/cdefs.h>
-__RCSID("$NetBSD: tic.c,v 1.25 2016/02/24 12:01:44 roy Exp $");
-
+#include <sys/stat.h>
 #include <sys/types.h>
 #include <sys/queue.h>
 
-#if !HAVE_NBTOOL_CONFIG_H || HAVE_SYS_ENDIAN_H
-#include <sys/endian.h>
-#endif
+#include <endian.h>
+#include "endian_conv.h"
 
 #include <cdbw.h>
 #include <ctype.h>
@@ -53,6 +46,7 @@ __RCSID("$NetBSD: tic.c,v 1.25 2016/02/24 12:01:44 roy Exp $");
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include <unistd.h>
 #include <term_private.h>
 #include <term.h>
 
@@ -71,7 +65,7 @@ static int error_exit;
 static int Sflag;
 static size_t nterm, nalias;
 
-static void __printflike(1, 2)
+static void __attribute__((__format__(__printf__, 1, 2)))
 dowarn(const char *fmt, ...)
 {
 	va_list va;
@@ -129,7 +123,7 @@ find_term(const char *name)
 {
 	ENTRY elem, *elemp;
 
-	elem.key = __UNCONST(name);
+	elem.key = (char *)name;
 	elem.data = NULL;
 	elemp = hsearch(elem, FIND);
 	return elemp ? (TERM *)elemp->data : NULL;
