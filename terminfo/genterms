@@ -37,4 +37,4 @@ set -e
 echo "/* DO NOT EDIT"
 echo " * Automatically generated from terminfo */"
 echo
-${TOOL_TIC} -Sx ${TERMINFO} ansi dumb vt100 vt220 wsvt25 xterm
+${TOOL_TIC} -Sx ${TERMINFO} linux
