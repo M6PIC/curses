@@ -30,4 +30,6 @@ add_library(terminfo_egg
 	../src/tputs.c
 	../src/setupterm.c
 	${PROJECT_BINARY_DIR}/egg/hash.c
+	../../general/cdbr.c
+	../../general/mi_vector_hash.c
 	)

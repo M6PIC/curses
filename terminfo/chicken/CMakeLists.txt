@@ -34,4 +34,6 @@ add_library(terminfo
 	../src/tputs.c
 	../src/setupterm.c
 	${PROJECT_BINARY_DIR}/chicken/hash.c
+	../../general/cdbr.c
+	../../general/mi_vector_hash.c
 	)
