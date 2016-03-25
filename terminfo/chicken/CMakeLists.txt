@@ -32,5 +32,6 @@ add_library(terminfo
 	../src/ti.c
 	../src/tparm.c
 	../src/tputs.c
+	../src/setupterm.c
 	${PROJECT_BINARY_DIR}/chicken/hash.c
 	)

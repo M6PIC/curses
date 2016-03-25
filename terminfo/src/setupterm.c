@@ -27,9 +27,6 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <sys/cdefs.h>
-__RCSID("$NetBSD: setupterm.c,v 1.4 2013/06/07 13:16:18 roy Exp $");
-
 #include <assert.h>
 #include <err.h>
 #include <stdio.h>
@@ -65,7 +62,7 @@ ti_setupterm(TERMINAL **nterm, const char *term, int fildes, int *errret)
 {
 	int error;
 
-	_DIAGASSERT(nterm != NULL);
+	assert(nterm != NULL);
 
 	if (term == NULL)
 		term = getenv("TERM");
