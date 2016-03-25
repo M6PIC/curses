@@ -46,11 +46,7 @@
 int
 addwstr(const wchar_t *s)
 {
-#ifndef HAVE_WCHAR
-	return ERR;
-#else
 	return waddnwstr(stdscr, s, -1);
-#endif /* HAVE_WCHAR */
 }
 
 /*
@@ -60,11 +56,7 @@ addwstr(const wchar_t *s)
 int
 waddwstr(WINDOW *win, const wchar_t *s)
 {
-#ifndef HAVE_WCHAR
-	return ERR;
-#else
 	return waddnwstr(win, s, -1);
-#endif /* HAVE_WCHAR */
 }
 
 /*
@@ -75,11 +67,7 @@ waddwstr(WINDOW *win, const wchar_t *s)
 int
 addnwstr(const wchar_t *str, int n)
 {
-#ifndef HAVE_WCHAR
-	return ERR;
-#else
 	return waddnwstr(stdscr, str, n);
-#endif /* HAVE_WCHAR */
 }
 
 /*
@@ -89,11 +77,7 @@ addnwstr(const wchar_t *str, int n)
 int
 mvaddwstr(int y, int x, const wchar_t *str)
 {
-#ifndef HAVE_WCHAR
-	return ERR;
-#else
 	return mvwaddnwstr(stdscr, y, x, str, -1);
-#endif /* HAVE_WCHAR */
 }
 
 /*
@@ -103,11 +87,7 @@ mvaddwstr(int y, int x, const wchar_t *str)
 int
 mvwaddwstr(WINDOW *win, int y, int x, const wchar_t *str)
 {
-#ifndef HAVE_WCHAR
-	return ERR;
-#else
 	return mvwaddnwstr(win, y, x, str, -1);
-#endif /* HAVE_WCHAR */
 }
 
 /*
@@ -118,11 +98,7 @@ mvwaddwstr(WINDOW *win, int y, int x, const wchar_t *str)
 int
 mvaddnwstr(int y, int x, const wchar_t *str, int count)
 {
-#ifndef HAVE_WCHAR
-	return ERR;
-#else
 	return mvwaddnwstr(stdscr, y, x, str, count);
-#endif /* HAVE_WCHAR */
 }
 
 /*
@@ -133,14 +109,10 @@ mvaddnwstr(int y, int x, const wchar_t *str, int count)
 int
 mvwaddnwstr(WINDOW *win, int y, int x, const wchar_t *str, int count)
 {
-#ifndef HAVE_WCHAR
-	return ERR;
-#else
 	if (wmove(win, y, x) == ERR)
 		return ERR;
 
 	return waddnwstr(win, str, count);
-#endif /* HAVE_WCHAR */
 }
 
 /*
@@ -152,9 +124,6 @@ mvwaddnwstr(WINDOW *win, int y, int x, const wchar_t *str, int count)
 int
 waddnwstr(WINDOW *win, const wchar_t *s, int n)
 {
-#ifndef HAVE_WCHAR
-	return ERR;
-#else
 	size_t  len;
 	const wchar_t *p;
 	cchar_t cc;
@@ -192,5 +161,4 @@ waddnwstr(WINDOW *win, const wchar_t *s, int n)
 	}
 
 	return OK;
-#endif /* HAVE_WCHAR */
 }

@@ -134,9 +134,7 @@ winsnstr(WINDOW *win, const char *str, int n)
 	const char *scp;
 	int len, x;
 	__LINE *lnp;
-#ifdef HAVE_WCHAR
 	nschar_t *np, *tnp;
-#endif /* HAVE_WCHAR */
 
 	/* find string length */
 	if ( n > 0 )
@@ -156,7 +154,6 @@ winsnstr(WINDOW *win, const char *str, int n)
 		temp1 = &win->alines[win->cury]->line[win->maxx - 1];
 		temp2 = temp1 - len;
 		while (temp2 >= end) {
-#ifdef HAVE_WCHAR
 			np = temp1->nsp;
 			if (np){
 				while ( np ) {
@@ -166,7 +163,6 @@ winsnstr(WINDOW *win, const char *str, int n)
 				}
 				temp1->nsp = NULL;
 			}
-#endif /* HAVE_WCHAR */
 			(void) memcpy(temp1, temp2, sizeof(__LDATA));
 			temp1--, temp2--;
 		}
@@ -177,9 +173,7 @@ winsnstr(WINDOW *win, const char *str, int n)
 			scp++, temp1++, x++ ) {
 		temp1->ch = (wchar_t)*scp & __CHARTEXT;
 		temp1->attr = win->wattr;
-#ifdef HAVE_WCHAR
 		SET_WCOL( *temp1, 1 );
-#endif /* HAVE_WCHAR */
 	}
 #ifdef DEBUG
 	{

@@ -67,7 +67,6 @@ char	 __GT;				/* Gtty indicates tabs. */
 char	 __NONL;			/* Term can't hack LF doing a CR. */
 char	 __UPPERCASE;			/* Terminal is uppercase only. */
 
-#ifdef HAVE_WCHAR
 /*
  * Copy the non-spacing character list (src_nsp) to the given character,
  * allocate or free storage as required.
@@ -150,4 +149,3 @@ __cursesi_win_free_nsp(WINDOW *win)
 	}
 }
 
-#endif

@@ -142,11 +142,7 @@ _cursesi_setterm(char *type, SCREEN *screen)
 	/*
 	 * Precalculate conflict info for color/attribute end commands.
 	 */
-#ifndef HAVE_WCHAR
-	screen->mask_op = __ATTRIBUTES & ~__COLOR;
-#else
 	screen->mask_op = WA_ATTRIBUTES & ~__COLOR;
-#endif /* HAVE_WCHAR */
 	if (t_orig_pair(screen->term) != NULL) {
 		if (does_esc_m(t_orig_pair(screen->term)))
 			screen->mask_op &=
@@ -179,11 +175,7 @@ _cursesi_setterm(char *type, SCREEN *screen)
 		screen->mask_me = __ALTCHARSET;
 
 	/* Check what turning off the attributes also turns off */
-#ifndef HAVE_WCHAR
-	screen->mask_ue = __ATTRIBUTES & ~__UNDERSCORE;
-#else
 	screen->mask_ue = WA_ATTRIBUTES & ~__UNDERSCORE;
-#endif /* HAVE_WCHAR */
 	if (t_exit_underline_mode(screen->term) != NULL) {
 		if (does_esc_m(t_exit_underline_mode(screen->term)))
 			screen->mask_ue &=
@@ -203,11 +195,7 @@ _cursesi_setterm(char *type, SCREEN *screen)
 				screen->mask_ue &= ~__COLOR;
 		}
 	}
-#ifndef HAVE_WCHAR
-	screen->mask_se = __ATTRIBUTES & ~__STANDOUT;
-#else
 	screen->mask_se = WA_ATTRIBUTES & ~__STANDOUT;
-#endif /* HAVE_WCHAR */
 	if (t_exit_standout_mode(screen->term) != NULL) {
 		if (does_esc_m(t_exit_standout_mode(screen->term)))
 			screen->mask_se &=

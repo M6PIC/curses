@@ -76,12 +76,8 @@ wclrtobot(WINDOW *win)
 		minx = -1;
 		end = &win->alines[y]->line[win->maxx];
 		for (sp = &win->alines[y]->line[startx]; sp < end; sp++) {
-#ifndef HAVE_WCHAR
-			if (sp->ch != win->bch || sp->attr != attr) {
-#else
 			if (sp->ch != (wchar_t)btowc((int) win->bch) ||
 			    (sp->attr & WA_ATTRIBUTES) != attr || sp->nsp) {
-#endif /* HAVE_WCHAR */
 				maxx = sp;
 				if (minx == -1)
 					minx = (int)(sp - win->alines[y]->line);
@@ -89,14 +85,10 @@ wclrtobot(WINDOW *win)
 					sp->attr = attr | __ALTCHARSET;
 				else
 					sp->attr = attr;
-#ifdef HAVE_WCHAR
 				sp->ch = ( wchar_t )btowc(( int ) win->bch);
 				if (_cursesi_copy_nsp(win->bnsp, sp) == ERR)
 					return ERR;
 				SET_WCOL( *sp, 1 );
-#else
-				sp->ch = win->bch;
-#endif /* HAVE_WCHAR */
 			}
 		}
 

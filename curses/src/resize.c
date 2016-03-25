@@ -216,9 +216,7 @@ __resizewin(WINDOW *win, int nlines, int ncols)
 	 * free up any non-spacing storage before we lose the
 	 * pointers...
 	 */
-#ifdef HAVE_WCHAR
 	__cursesi_win_free_nsp(win);
-#endif
 
 	if (nlines <= 0 || ncols <= 0)
 		nlines = ncols = 0;
@@ -298,15 +296,11 @@ __resizewin(WINDOW *win, int nlines, int ncols)
 		lp = win->alines[i];
 		for (sp = lp->line, j = 0; j < win->maxx; j++, sp++) {
 			sp->attr = 0;
-#ifndef HAVE_WCHAR
-			sp->ch = win->bch;
-#else
 			sp->ch = ( wchar_t )btowc(( int ) win->bch );
 			sp->nsp = NULL;
 			if (_cursesi_copy_nsp(win->bnsp, sp) == ERR)
 				return ERR;
 			SET_WCOL( *sp, 1 );
-#endif /* HAVE_WCHAR */
 		}
 		lp->hash = __hash((char *)(void *)lp->line,
 				  (size_t) (ncols * __LDATASIZE));

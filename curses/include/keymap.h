@@ -98,9 +98,7 @@ struct keymap {
 #define INKEY_ASSEMBLING   1 /* assembling a multi-key sequence */
 #define INKEY_BACKOUT	   2 /* recovering from an unrecognised key */
 #define INKEY_TIMEOUT	   3 /* multi-key sequence timeout */
-#ifdef HAVE_WCHAR
 #define INKEY_WCASSEMBLING 4 /* assembling a wide char sequence */
-#endif /* HAVE_WCHAR */
 
 /* The terminfo data we are interested in and the symbols they map to */
 struct tcdata {

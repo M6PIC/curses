@@ -81,9 +81,7 @@ set_term(SCREEN *new)
 	__virtscr = new->__virtscr;
 
 	_cursesi_reset_acs(new);
-#ifdef HAVE_WCHAR
     _cursesi_reset_wacs(new);
-#endif /* HAVE_WCHAR */
 
 #ifdef DEBUG
 	__CTRACE(__CTRACE_SCREEN, "set_term: LINES = %d, COLS = %d\n",
@@ -173,10 +171,8 @@ newterm(char *type, FILE *outfd, FILE *infd)
 
 	__init_getch(new_screen);
 	__init_acs(new_screen);
-#ifdef HAVE_WCHAR
 	__init_get_wch( new_screen );
 	__init_wacs(new_screen);
-#endif /* HAVE_WCHAR */
 
 	__set_stophandler();
 	__set_winchhandler();

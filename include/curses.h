@@ -53,11 +53,7 @@
 typedef wchar_t	chtype;
 typedef wchar_t	attr_t;
 
-#if !defined(HAVE_WCHAR) && !defined(DISABLE_WCHAR)
-#define HAVE_WCHAR 1
-#endif
 
-#ifdef HAVE_WCHAR
 /* 
  * The complex character structure required by the X/Open reference and used
  * in * functions such as in_wchstr(). It includes a string of up to 8 wide
@@ -72,9 +68,6 @@ typedef struct {
 	wchar_t		vals[CURSES_CCHAR_MAX]; /* wide chars including
 						   non-spacing */
 } cchar_t;
-#else 
-typedef chtype cchar_t;
-#endif /* HAVE_WCHAR */
 
 #ifndef TRUE
 #define	TRUE	(/*CONSTCOND*/1)
@@ -229,9 +222,7 @@ typedef chtype cchar_t;
 #define __ALTCHARSET	0x00010000	/* Added characters are ACS */
 #define __COLOR		0x03fe0000	/* Color bits */
 #define __ATTRIBUTES	0x03ffff00	/* All 8-bit attribute bits */
-#ifdef HAVE_WCHAR
 #define __ACS_IS_WACS	0x04000000 /* internal: use wacs table for ACS char */
-#endif
 
 typedef struct __ldata __LDATA;
 typedef struct __line  __LINE;
@@ -256,7 +247,6 @@ typedef struct __screen SCREEN;
 #define	A_CHARTEXT	__CHARTEXT
 #define	A_COLOR		__COLOR
 
-#ifdef HAVE_WCHAR
 #define WA_ATTRIBUTES	0x03ffffff	/* Wide character attributes mask */
 #define WA_NORMAL	__NORMAL
 #define WA_STANDOUT	__STANDOUT	/* Best highlighting mode */
@@ -274,7 +264,6 @@ typedef struct __screen SCREEN;
 #define WA_VERTICAL	0x00000010	/* Vertical highlight */
 #define WA_LEFT		0x00000020	/* Left highlight */
 #define WA_RIGHT	0x00000040	/* Right highlight */
-#endif /* HAVE_WCHAR */
 
 /*
  * Alternate character set definitions
@@ -325,7 +314,6 @@ extern chtype _acs_char[NUM_ACS];
 #define	ACS_NEQUAL	_acs_char[__UC_CAST('|')]
 #define	ACS_STERLING	_acs_char[__UC_CAST('}')]
 
-#ifdef HAVE_WCHAR
 extern cchar_t _wacs_char[NUM_ACS];
 
 #define	WACS_RARROW     (&_wacs_char[(unsigned char)'+'])
@@ -360,7 +348,6 @@ extern cchar_t _wacs_char[NUM_ACS];
 #define	WACS_PI		(&_wacs_char[(unsigned char)'{'])
 #define	WACS_NEQUAL	(&_wacs_char[(unsigned char)'|'])
 #define	WACS_STERLING	(&_wacs_char[(unsigned char)'}'])
-#endif /* HAVE_WCHAR */
 
 /* System V compatibility */
 #define	ACS_SBBS	ACS_LRCORNER
@@ -921,8 +908,6 @@ int wgetbkgrnd(WINDOW *, cchar_t *);
 /* Private functions that are needed for user programs prototypes. */
 int	 __cputchar(int);
 int	 __waddbytes(WINDOW *, const char *, int, attr_t);
-#ifdef HAVE_WCHAR
 int __cputwchar( wchar_t );
-#endif /* HAVE_WCHAR */
 
 #endif /* !_CURSES_H_ */

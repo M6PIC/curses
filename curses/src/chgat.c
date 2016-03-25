@@ -83,11 +83,7 @@ mvwchgat(WINDOW *win , int y, int x, int count, attr_t attr, short color,
 
 	while (count-- > 0) {
 		lp->flags |= __ISDIRTY;
-#ifdef HAVE_WCHAR
 		lc->attr = (lc->attr & ~WA_ATTRIBUTES) | attr;
-#else
-		lc->attr = attr;
-#endif
 		++lc;
 	}
 

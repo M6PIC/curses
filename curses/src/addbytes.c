@@ -108,14 +108,10 @@ _cursesi_waddbytes(WINDOW *win, const char *bytes, int count, attr_t attr,
 {
 	int		x, y, err;
 	__LINE		*lp;
-#ifdef HAVE_WCHAR
 	int		n;
 	cchar_t		cc;
 	wchar_t		wc;
 	mbstate_t	st;
-#else
-	int		c;
-#endif
 #ifdef DEBUG
 	int             i;
 
@@ -130,19 +126,8 @@ _cursesi_waddbytes(WINDOW *win, const char *bytes, int count, attr_t attr,
 	SYNCH_IN;
 	lp = win->alines[y];
 
-#ifdef HAVE_WCHAR
 	(void)memset(&st, 0, sizeof(st));
-#endif
 	while (count > 0) {
-#ifndef HAVE_WCHAR
-		c = *bytes++;
-#ifdef DEBUG
-		__CTRACE(__CTRACE_INPUT, "ADDBYTES('%c', %x) at (%d, %d)\n",
-		    c, attr, y, x);
-#endif
-		err = _cursesi_addbyte(win, &lp, &y, &x, c, attr, char_interp);
-		count--;
-#else
 		/*
 		 * For wide-character support only, try and convert the
 		 * given string into a wide character - we do this because
@@ -173,7 +158,6 @@ _cursesi_waddbytes(WINDOW *win, const char *bytes, int count, attr_t attr,
 		err = _cursesi_addwchar(win, &lp, &y, &x, &cc, char_interp);
 		bytes += n;
 		count -= n;
-#endif
 	}
 
 	SYNCH_OUT;
@@ -329,9 +313,6 @@ int
 _cursesi_addwchar(WINDOW *win, __LINE **lnp, int *y, int *x,
 		  const cchar_t *wch, int char_interp)
 {
-#ifndef HAVE_WCHAR
-	return (ERR);
-#else
 	int sx = 0, ex = 0, cw = 0, i = 0, newx = 0, tabsize;
 	__LDATA *lp = &win->alines[*y]->line[*x], *tp = NULL;
 	nschar_t *np = NULL;
@@ -596,5 +577,4 @@ _cursesi_addwchar(WINDOW *win, __LINE **lnp, int *y, int *x,
 	__CTRACE(__CTRACE_INPUT, "add_wch: %d : 0x%x\n", lp->ch, lp->attr);
 #endif /* DEBUG */
 	return OK;
-#endif
 }

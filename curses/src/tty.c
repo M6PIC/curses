@@ -634,14 +634,10 @@ killchar(void)
 int
 erasewchar( wchar_t *ch )
 {
-#ifndef HAVE_WCHAR
-	return ERR;
-#else
 	if (_cursesi_screen->notty == TRUE)
 		return ERR;
 	*ch = _cursesi_screen->baset.c_cc[VERASE];
 	return OK;
-#endif /* HAVE_WCHAR */
 }
 
 /*
@@ -651,12 +647,8 @@ erasewchar( wchar_t *ch )
 int
 killwchar( wchar_t *ch )
 {
-#ifndef HAVE_WCHAR
-	return ERR;
-#else
 	if (_cursesi_screen->notty == TRUE)
 		return 0;
 	*ch = _cursesi_screen->baset.c_cc[VKILL];
 	return OK;
-#endif /* HAVE_WCHAR */
 }

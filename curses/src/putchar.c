@@ -59,7 +59,6 @@ __cputchar_args(int ch, void *args)
 	return putc(ch, outfd);
 }
 
-#ifdef HAVE_WCHAR
 int
 __cputwchar(wchar_t wch)
 {
@@ -85,4 +84,3 @@ __cputwchar_args(wchar_t wch, void *args)
 #endif
 	return putwc(wch, outfd);
 }
-#endif /* HAVE_WCHAR */

@@ -136,9 +136,7 @@ wattr_get(WINDOW *win, attr_t *attr, short *pair, void *opt)
 #endif
 	if (attr != NULL) {
 		*attr = win->wattr;
-#ifdef HAVE_WCHAR
 		*attr &= WA_ATTRIBUTES;
-#endif
 	}
 
 	if (pair != NULL)
@@ -171,7 +169,6 @@ wattr_on(WINDOW *win, attr_t attr, void *opt)
 			win->wattr |= __PROTECT;
 		if (attr & __REVERSE && enter_reverse_mode != NULL)
 			win->wattr |= __REVERSE;
-#ifdef HAVE_WCHAR
 		if (attr & WA_LOW && enter_low_hl_mode != NULL)
 			win->wattr |= WA_LOW;
 		if (attr & WA_TOP && enter_top_hl_mode != NULL)
@@ -184,7 +181,6 @@ wattr_on(WINDOW *win, attr_t attr, void *opt)
 			win->wattr |= WA_HORIZONTAL;
 		if (attr & WA_VERTICAL && enter_vertical_hl_mode != NULL)
 			win->wattr |= WA_VERTICAL;
-#endif /* HAVE_WCHAR */
 	}
 	if (attr & __STANDOUT && enter_standout_mode != NULL && exit_standout_mode != NULL)
 		wstandout(win);
@@ -223,7 +219,6 @@ wattr_off(WINDOW *win, attr_t attr, void *opt)
 			win->wattr &= ~__PROTECT;
 		if (attr & __REVERSE)
 			win->wattr &= ~__REVERSE;
-#ifdef HAVE_WCHAR
 		if (attr & WA_LOW)
 			win->wattr &= ~WA_LOW;
 		if (attr & WA_TOP)
@@ -236,7 +231,6 @@ wattr_off(WINDOW *win, attr_t attr, void *opt)
 			win->wattr &= ~WA_HORIZONTAL;
 	if (attr & WA_VERTICAL)
 			win->wattr &= ~WA_VERTICAL;
-#endif /* HAVE_WCHAR */
 	}
 	if (attr & __STANDOUT)
 		wstandend(win);
@@ -404,7 +398,6 @@ term_attrs(void)
 			attr |= __PROTECT;
 		if (enter_reverse_mode != NULL)
 			attr |= __REVERSE;
-#ifdef HAVE_WCHAR
 		if (enter_low_hl_mode != NULL)
 			attr |= WA_LOW;
 		if (enter_top_hl_mode != NULL)
@@ -417,7 +410,6 @@ term_attrs(void)
 			attr |= WA_HORIZONTAL;
 		if (enter_vertical_hl_mode != NULL)
 			attr |= WA_VERTICAL;
-#endif /* HAVE_WCHAR */
 	}
 	if (enter_standout_mode != NULL && exit_standout_mode != NULL)
 		attr |= __STANDOUT;

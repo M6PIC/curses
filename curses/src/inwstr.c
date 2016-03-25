@@ -44,21 +44,13 @@
 int
 inwstr(wchar_t *wstr)
 {
-#ifndef HAVE_WCHAR
-	return ERR;
-#else
 	return winwstr(stdscr, wstr);
-#endif /* HAVE_WCHAR */
 }
 
 int
 innwstr(wchar_t *wstr, int n)
 {
-#ifndef HAVE_WCHAR
-	return ERR;
-#else
 	return winnwstr(stdscr, wstr, n);
-#endif /* HAVE_WCHAR */
 }
 
 /*
@@ -68,21 +60,13 @@ innwstr(wchar_t *wstr, int n)
 int
 mvinwstr(int y, int x, wchar_t *wstr)
 {
-#ifndef HAVE_WCHAR
-	return ERR;
-#else
 	return mvwinwstr(stdscr, y, x, wstr);
-#endif /* HAVE_WCHAR */
 }
 
 int
 mvinnwstr(int y, int x, wchar_t *wstr, int n)
 {
-#ifndef HAVE_WCHAR
-	return ERR;
-#else
 	return mvwinnwstr(stdscr, y, x, wstr, n);
-#endif /* HAVE_WCHAR */
 }
 
 /*
@@ -92,27 +76,19 @@ mvinnwstr(int y, int x, wchar_t *wstr, int n)
 int
 mvwinwstr(WINDOW *win, int y, int x, wchar_t *wstr)
 {
-#ifndef HAVE_WCHAR
-	return ERR;
-#else
 	if (wmove(win, y, x) == ERR)
 		return ERR;
 
 	return winwstr(win, wstr);
-#endif /* HAVE_WCHAR */
 }
 
 int
 mvwinnwstr(WINDOW *win, int y, int x, wchar_t *wstr, int n)
 {
-#ifndef HAVE_WCHAR
-	return ERR;
-#else
 	if (wmove(win, y, x) == ERR)
 		return ERR;
 
 	return winnwstr(win, wstr, n);
-#endif /* HAVE_WCHAR */
 }
 
 /*
@@ -122,12 +98,7 @@ mvwinnwstr(WINDOW *win, int y, int x, wchar_t *wstr, int n)
 int
 winwstr(WINDOW *win, wchar_t *wstr)
 {
-#ifndef HAVE_WCHAR
-	return ERR;
-#else
-
 	return winnwstr(win, wstr, -1);
-#endif /* HAVE_WCHAR */
 }
 
 /*
@@ -142,9 +113,6 @@ winwstr(WINDOW *win, wchar_t *wstr)
 int
 winnwstr(WINDOW *win, wchar_t *wstr, int n)
 {
-#ifndef HAVE_WCHAR
-	return ERR;
-#else
 	__LDATA	*start;
 	int x, cw, cnt;
 	wchar_t *wcp;
@@ -177,5 +145,4 @@ winnwstr(WINDOW *win, wchar_t *wstr, int n)
 		return OK;
 	else
 		return cnt;
-#endif /* HAVE_WCHAR */
 }

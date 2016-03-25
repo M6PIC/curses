@@ -45,9 +45,5 @@ box(WINDOW *win, chtype vert, chtype hor)
 int 
 box_set(WINDOW *win, const cchar_t *verch, const cchar_t *horch)
 {
-#ifndef HAVE_WCHAR
-	return ERR;
-#else
 	return wborder_set(win, verch, verch, horch, horch, NULL, NULL, NULL, NULL);
-#endif /* HAVE_WCHAR */
 }

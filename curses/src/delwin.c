@@ -55,9 +55,7 @@ delwin(WINDOW *win)
 	/*
 	 * Free any storage used by non-spacing characters in the window.
 	 */
-#ifdef HAVE_WCHAR
 	__cursesi_win_free_nsp(win);
-#endif
 
 	if (win->orig == NULL) {
 		/*

@@ -35,14 +35,12 @@
 #include "curses_private.h"
 
 chtype _acs_char[NUM_ACS];
-#ifdef HAVE_WCHAR
 #include <assert.h>
 #include <locale.h>
 #include <langinfo.h>
 #include <strings.h>
 
 cchar_t _wacs_char[ NUM_ACS ];
-#endif /* HAVE_WCHAR */
 
 /*
  * __init_acs --
@@ -132,7 +130,6 @@ _cursesi_reset_acs(SCREEN *screen)
 		_acs_char[count]= screen->acs_char[count];
 }
 
-#ifdef HAVE_WCHAR
 /*
  * __init_wacs --
  *	Fill in the ACS characters.  The 'acs_chars' terminfo entry is a list of
@@ -303,4 +300,3 @@ _cursesi_reset_wacs(SCREEN *screen)
 		memcpy( &_wacs_char[count], &screen->wacs_char[count],
 			sizeof( cchar_t ));
 }
-#endif /* HAVE_WCHAR */

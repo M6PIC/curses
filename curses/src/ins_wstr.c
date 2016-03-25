@@ -125,9 +125,6 @@ wins_wstr(WINDOW *win, const wchar_t *wstr)
 int
 wins_nwstr(WINDOW *win, const wchar_t *wstr, int n)
 {
-#ifndef HAVE_WCHAR
-	return ERR;
-#else
 	__LDATA	 *start, *temp1, *temp2;
 	__LINE	  *lnp;
 	const wchar_t *scp;
@@ -325,5 +322,4 @@ wins_nwstr(WINDOW *win, const wchar_t *wstr, int n)
 		*lnp->lastchp = newx;
 	__touchline(win, (int) win->cury, sx, (int) win->maxx - 1);
 	return OK;
-#endif /* HAVE_WCHAR */
 }

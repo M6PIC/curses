@@ -102,7 +102,6 @@ const unsigned char    __unctrllen[256] = {
 	4, 4, 4, 4, 4, 4, 4, 4,
 };
 
-#ifdef HAVE_WCHAR
 const wchar_t   * const __wunctrl[256] = {
 	L"^@", L"^A", L"^B", L"^C", L"^D", L"^E", L"^F", L"^G",
 	L"^H", L"^I", L"^J", L"^K", L"^L", L"^M", L"^N", L"^O",
@@ -138,4 +137,3 @@ const wchar_t   * const __wunctrl[256] = {
 	L"0xf0", L"0xf1", L"0xf2", L"0xf3", L"0xf4", L"0xf5", L"0xf6", L"0xf7",
 	L"0xf8", L"0xf9", L"0xfa", L"0xfb", L"0xfc", L"0xfd", L"0xfe", L"0xff",
 };
-#endif /* HAVE_WCHAR */

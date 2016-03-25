@@ -44,21 +44,13 @@
 int
 in_wchstr(cchar_t *wchstr)
 {
-#ifndef HAVE_WCHAR
-	return ERR;
-#else
 	return win_wchstr(stdscr, wchstr);
-#endif /* HAVE_WCHAR */
 }
 
 int
 in_wchnstr(cchar_t *wchstr, int n)
 {
-#ifndef HAVE_WCHAR
-	return ERR;
-#else
 	return win_wchnstr(stdscr, wchstr, n);
-#endif /* HAVE_WCHAR */
 }
 
 /*
@@ -68,21 +60,13 @@ in_wchnstr(cchar_t *wchstr, int n)
 int
 mvin_wchstr(int y, int x, cchar_t *wchstr)
 {
-#ifndef HAVE_WCHAR
-	return ERR;
-#else
 	return mvwin_wchstr(stdscr, y, x, wchstr);
-#endif /* HAVE_WCHAR */
 }
 
 int
 mvin_wchnstr(int y, int x, cchar_t *wchstr, int n)
 {
-#ifndef HAVE_WCHAR
-	return ERR;
-#else
 	return mvwin_wchnstr(stdscr, y, x, wchstr, n);
-#endif /* HAVE_WCHAR */
 }
 
 /*
@@ -92,27 +76,19 @@ mvin_wchnstr(int y, int x, cchar_t *wchstr, int n)
 int
 mvwin_wchstr(WINDOW *win, int y, int x, cchar_t *wchstr)
 {
-#ifndef HAVE_WCHAR
-	return ERR;
-#else
 	if (wmove(win, y, x) == ERR)
 		return ERR;
 
 	return win_wchstr(win, wchstr);
-#endif /* HAVE_WCHAR */
 }
 
 int
 mvwin_wchnstr(WINDOW *win, int y, int x, cchar_t *wchstr, int n)
 {
-#ifndef HAVE_WCHAR
-	return ERR;
-#else
 	if (wmove(win, y, x) == ERR)
 		return ERR;
 
 	return win_wchnstr(win, wchstr, n);
-#endif /* HAVE_WCHAR */
 }
 
 /*
@@ -122,12 +98,7 @@ mvwin_wchnstr(WINDOW *win, int y, int x, cchar_t *wchstr, int n)
 int
 win_wchstr(WINDOW *win, cchar_t *wchstr)
 {
-#ifndef HAVE_WCHAR
-	return ERR;
-#else
-
 	return win_wchnstr(win, wchstr, -1);
-#endif /* HAVE_WCHAR */
 }
 
 /*
@@ -137,9 +108,6 @@ win_wchstr(WINDOW *win, cchar_t *wchstr)
 int
 win_wchnstr(WINDOW *win, cchar_t *wchstr, int n)
 {
-#ifndef HAVE_WCHAR
-	return ERR;
-#else
 	__LDATA	*start;
 	int x = 0, cw = 0, cnt = 0;
 	cchar_t *wcp;
@@ -180,5 +148,4 @@ win_wchnstr(WINDOW *win, cchar_t *wchstr, int n)
 	wcp->attributes = win->wattr;
 
 	return OK;
-#endif /* HAVE_WCHAR */
 }

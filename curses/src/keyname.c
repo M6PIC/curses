@@ -487,9 +487,6 @@ keyname(int key)
 char *
 key_name(wchar_t key)
 {
-#ifndef HAVE_WCHAR
-	return NULL;
-#else
 	(void) keyname((int) key);
 
 	if (!strncmp(name, "M-", 2)) {
@@ -498,6 +495,5 @@ key_name(wchar_t key)
 		name[1] = '\0';
 	}
 	return name;
-#endif /* HAVE_WCHAR */
 }
 

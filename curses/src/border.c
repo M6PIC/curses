@@ -61,98 +61,6 @@ int
 wborder(WINDOW *win, chtype left, chtype right, chtype top, chtype bottom,
 	chtype topleft, chtype topright, chtype botleft, chtype botright)
 {
-#ifndef HAVE_WCHAR
-	int	 endy, endx, i;
-	__LDATA	*fp, *lp;
-
-	if (!(left & __CHARTEXT))
-		left |= ACS_VLINE;
-	if (!(right & __CHARTEXT))
-		right |= ACS_VLINE;
-	if (!(top & __CHARTEXT))
-		top |= ACS_HLINE;
-	if (!(bottom & __CHARTEXT))
-		bottom |= ACS_HLINE;
-	if (!(topleft & __CHARTEXT))
-		topleft |= ACS_ULCORNER;
-	if (!(topright & __CHARTEXT))
-		topright |= ACS_URCORNER;
-	if (!(botleft & __CHARTEXT))
-		botleft |= ACS_LLCORNER;
-	if (!(botright & __CHARTEXT))
-		botright |= ACS_LRCORNER;
-
-#ifdef DEBUG
-	__CTRACE(__CTRACE_INPUT, "wborder: left = %c, 0x%x\n",
-	    left & __CHARTEXT, left & __ATTRIBUTES);
-	__CTRACE(__CTRACE_INPUT, "wborder: right = %c, 0x%x\n",
-	    right & __CHARTEXT, right & __ATTRIBUTES);
-	__CTRACE(__CTRACE_INPUT, "wborder: top = %c, 0x%x\n",
-	    top & __CHARTEXT, top & __ATTRIBUTES);
-	__CTRACE(__CTRACE_INPUT, "wborder: bottom = %c, 0x%x\n",
-	    bottom & __CHARTEXT, bottom & __ATTRIBUTES);
-	__CTRACE(__CTRACE_INPUT, "wborder: topleft = %c, 0x%x\n",
-	    topleft & __CHARTEXT, topleft & __ATTRIBUTES);
-	__CTRACE(__CTRACE_INPUT, "wborder: topright = %c, 0x%x\n",
-	    topright & __CHARTEXT, topright & __ATTRIBUTES);
-	__CTRACE(__CTRACE_INPUT, "wborder: botleft = %c, 0x%x\n",
-	    botleft & __CHARTEXT, botleft & __ATTRIBUTES);
-	__CTRACE(__CTRACE_INPUT, "wborder: botright = %c, 0x%x\n",
-	    botright & __CHARTEXT, botright & __ATTRIBUTES);
-#endif
-
-	/* Merge window and background attributes */
-	left |= (left & __COLOR) ? (win->wattr & ~__COLOR) : win->wattr;
-	left |= (left & __COLOR) ? (win->battr & ~__COLOR) : win->battr;
-	right |= (right & __COLOR) ? (win->wattr & ~__COLOR) : win->wattr;
-	right |= (right & __COLOR) ? (win->battr & ~__COLOR) : win->battr;
-	top |= (top & __COLOR) ? (win->wattr & ~__COLOR) : win->wattr;
-	top |= (top & __COLOR) ? (win->battr & ~__COLOR) : win->battr;
-	bottom |= (bottom & __COLOR) ? (win->wattr & ~__COLOR) : win->wattr;
-	bottom |= (bottom & __COLOR) ? (win->battr & ~__COLOR) : win->battr;
-	topleft |= (topleft & __COLOR) ? (win->wattr & ~__COLOR) : win->wattr;
-	topleft |= (topleft & __COLOR) ? (win->battr & ~__COLOR) : win->battr;
-	topright |= (topright & __COLOR) ? (win->wattr & ~__COLOR) : win->wattr;
-	topright |= (topright & __COLOR) ? (win->battr & ~__COLOR) : win->battr;
-	botleft |= (botleft & __COLOR) ? (win->wattr & ~__COLOR) : win->wattr;
-	botleft |= (botleft & __COLOR) ? (win->battr & ~__COLOR) : win->battr;
-	botright |= (botright & __COLOR) ? (win->wattr & ~__COLOR) : win->wattr;
-	botright |= (botright & __COLOR) ? (win->battr & ~__COLOR) : win->battr;
-
-	endx = win->maxx - 1;
-	endy = win->maxy - 1;
-	fp = win->alines[0]->line;
-	lp = win->alines[endy]->line;
-
-	/* Sides */
-	for (i = 1; i < endy; i++) {
-		win->alines[i]->line[0].ch = (wchar_t) left & __CHARTEXT;
-		win->alines[i]->line[0].attr = (attr_t) left & __ATTRIBUTES;
-		win->alines[i]->line[endx].ch = (wchar_t) right & __CHARTEXT;
-		win->alines[i]->line[endx].attr = (attr_t) right & __ATTRIBUTES;
-	}
-	for (i = 1; i < endx; i++) {
-		fp[i].ch = (wchar_t) top & __CHARTEXT;
-		fp[i].attr = (attr_t) top & __ATTRIBUTES;
-		lp[i].ch = (wchar_t) bottom & __CHARTEXT;
-		lp[i].attr = (attr_t) bottom & __ATTRIBUTES;
-	}
-
-	/* Corners */
-	if (!(win->maxx == LINES && win->maxy == COLS &&
-	    (win->flags & __SCROLLOK) && (win->flags & __SCROLLWIN))) {
-		fp[0].ch = (wchar_t) topleft & __CHARTEXT;
-		fp[0].attr = (attr_t) topleft & __ATTRIBUTES;
-		fp[endx].ch = (wchar_t) topright & __CHARTEXT;
-		fp[endx].attr = (attr_t) topright & __ATTRIBUTES;
-		lp[0].ch = (wchar_t) botleft & __CHARTEXT;
-		lp[0].attr = (attr_t) botleft & __ATTRIBUTES;
-		lp[endx].ch = (wchar_t) botright & __CHARTEXT;
-		lp[endx].attr = (attr_t) botright & __ATTRIBUTES;
-	}
-	__touchwin(win);
-	return (OK);
-#else /* HAVE_WCHAR */
 	cchar_t ls, rs, ts, bs, tl, tr, bl, br;
 	cchar_t *lsp, *rsp, *tsp, *bsp, *tlp, *trp, *blp, *brp;
 
@@ -175,18 +83,13 @@ wborder(WINDOW *win, chtype left, chtype right, chtype top, chtype bottom,
 	S(botright, br, WACS_LRCORNER);
 #undef S
 	return wborder_set(win, lsp, rsp, tsp, bsp, tlp, trp, blp, brp);
-#endif /* HAVE_WCHAR */
 }
 
 int border_set(const cchar_t *ls, const cchar_t *rs, const cchar_t *ts,
 	   const cchar_t *bs, const cchar_t *tl, const cchar_t *tr,
 	   const cchar_t *bl, const cchar_t *br)
 {
-#ifndef HAVE_WCHAR
-	return ERR;
-#else
 	return wborder_set(stdscr, ls, rs, ts, bs, tl, tr, bl, br);
-#endif /* HAVE_WCHAR */
 }
 
 int wborder_set(WINDOW *win, const cchar_t *ls, const cchar_t *rs,
@@ -194,9 +97,6 @@ int wborder_set(WINDOW *win, const cchar_t *ls, const cchar_t *rs,
 		const cchar_t *tl, const cchar_t *tr,
 		const cchar_t *bl, const cchar_t *br)
 {
-#ifndef HAVE_WCHAR
-	return ERR;
-#else
 	int	 endy, endx, i, j, k, cw, pcw, tlcw, blcw, trcw, brcw;
 	cchar_t left, right, bottom, top, topleft, topright, botleft, botright;
 	nschar_t *np, *tnp;
@@ -613,5 +513,4 @@ int wborder_set(WINDOW *win, const cchar_t *ls, const cchar_t *rs,
 	}
 	__touchwin(win);
 	return (OK);
-#endif /* HAVE_WCHAR */
 }

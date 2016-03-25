@@ -44,11 +44,7 @@
 int
 in_wch(cchar_t *wcval)
 {
-#ifndef HAVE_WCHAR
-	return ERR;
-#else
 	return win_wch(stdscr, wcval);
-#endif /* HAVE_WCHAR */
 }
 
 /*
@@ -58,11 +54,7 @@ in_wch(cchar_t *wcval)
 int
 mvin_wch(int y, int x, cchar_t *wcval)
 {
-#ifndef HAVE_WCHAR
-	return ERR;
-#else
 	return mvwin_wch(stdscr, y, x, wcval);
-#endif /* HAVE_WCHAR */
 }
 
 /*
@@ -72,14 +64,10 @@ mvin_wch(int y, int x, cchar_t *wcval)
 int
 mvwin_wch(WINDOW *win, int y, int x, cchar_t *wcval)
 {
-#ifndef HAVE_WCHAR
-	return ERR;
-#else
 	if (wmove(win, y, x) == ERR)
 		return ERR;
 
 	return win_wch(win, wcval);
-#endif /* HAVE_WCHAR */
 }
 
 /*
@@ -89,9 +77,6 @@ mvwin_wch(WINDOW *win, int y, int x, cchar_t *wcval)
 int
 win_wch(WINDOW *win, cchar_t *wcval)
 {
-#ifndef HAVE_WCHAR
-	return ERR;
-#else
 	nschar_t *np;
 	__LDATA *lp = &win->alines[ win->cury ]->line[ win->curx ];
 	int cw = WCOL( *lp );
@@ -110,5 +95,4 @@ win_wch(WINDOW *win, cchar_t *wcval)
 	}
 
 	return OK;
-#endif /* HAVE_WCHAR */
 }

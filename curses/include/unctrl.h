@@ -34,22 +34,16 @@
 #ifndef _UNCTRL_H_
 #define _UNCTRL_H_
 
-#ifdef HAVE_WCHAR
 #include <wchar.h>
 #include <curses.h>
-#endif /* HAVE_WCHAR */
 
 extern const char * const  __unctrl[];		/* Control strings. */
 extern const unsigned char __unctrllen[];	/* Control strings length. */
-#ifdef HAVE_WCHAR
 extern const wchar_t * const  __wunctrl[];	/* Wide char control strings. */
-#endif /* HAVE_WCHAR */
 
 /* 8-bit ASCII characters. */
 #define	unctrl(c)		__unctrl[((unsigned char)c) & 0xff]
 #define	unctrllen(c)	__unctrllen[((unsigned char)c) & 0xff]
 
-#ifdef HAVE_WCHAR
 #define	wunctrl(wc)		__wunctrl[( int )((wc)->vals[ 0 ]) & 0xff]
-#endif /* HAVE_WCHAR */
 #endif /* _UNCTRL_H_ */

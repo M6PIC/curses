@@ -45,7 +45,6 @@
 /* Private structure definitions for curses. */
 
 /* Termcap capabilities. */
-#ifdef HAVE_WCHAR
 /*
  * Add a list of non-spacing characters to each spacing
  * character in a singly linked list
@@ -54,7 +53,6 @@ typedef struct nschar_t {
 	wchar_t			ch;		/* Non-spacing character */
 	struct nschar_t	*next;	/* Next non-spacing character */
 } nschar_t;
-#endif /* HAVE_WCHAR */
 
 /*
  * A window is an array of __LINE structures pointed to by the 'lines' pointer.
@@ -70,12 +68,9 @@ typedef struct nschar_t {
 struct __ldata {
 	wchar_t	ch;			/* Character */
 	attr_t	attr;			/* Attributes */
-#ifdef HAVE_WCHAR
 	nschar_t	*nsp;	/* Foreground non-spacing character pointer */
-#endif /* HAVE_WCHAR */
 };
 
-#ifdef HAVE_WCHAR
 /* macros to extract the width of a wide character */
 #define __WCWIDTH 0xfc000000
 #define WCW_SHIFT 26
@@ -87,7 +82,6 @@ struct __ldata {
 #define SET_BGWCOL(c, w) do { 						\
 	((c).battr) = ((((c).battr) & WA_ATTRIBUTES ) | ((w) << WCW_SHIFT )); \
 } while(/*CONSTCOND*/0)
-#endif /* HAVE_WCHAR */
 
 #define __LDATASIZE	(sizeof(__LDATA))
 
@@ -144,20 +138,13 @@ struct __window {		/* Window structure. */
 	int	dery, derx;		/* derived window coordinates
 					   - top left corner of source 
 					   relative to parent win */
-#ifdef HAVE_WCHAR
 	nschar_t *bnsp;			/* Background non-spacing char list */
-#endif /* HAVE_WCHAR */
 };
 
 /* Set of attributes unset by 'me' - 'mb', 'md', 'mh', 'mk', 'mp' and 'mr'. */
-#ifndef HAVE_WCHAR
-#define	__TERMATTR \
-	(__REVERSE | __BLINK | __DIM | __BOLD | __BLANK | __PROTECT)
-#else
 #define	__TERMATTR \
 	(__REVERSE | __BLINK | __DIM | __BOLD | __BLANK | __PROTECT \
 	| WA_TOP | WA_LOW | WA_LEFT | WA_RIGHT | WA_HORIZONTAL | WA_VERTICAL)
-#endif /* HAVE_WCHAR */
 
 struct __winlist {
 	struct __window		*winp;	/* The window. */
@@ -207,9 +194,7 @@ struct __screen {
 	char	 UPPERCASE;	/* Terminal is uppercase only. */
 
 	chtype acs_char[NUM_ACS];
-#ifdef HAVE_WCHAR
 	cchar_t wacs_char[ NUM_ACS ];
-#endif /* HAVE_WCHAR */
 	struct __color colours[MAX_COLORS];
 	struct __pair  colour_pairs[MAX_PAIRS];
 	attr_t	nca;
@@ -251,7 +236,6 @@ struct __screen {
 	int resized;
 	wchar_t *unget_list;
 	int unget_len, unget_pos;
-#ifdef HAVE_WCHAR
 #define MB_LEN_MAX 8
 #define MAX_CBUF_SIZE MB_LEN_MAX
 	int		cbuf_head;		/* header to cbuf */
@@ -259,7 +243,6 @@ struct __screen {
 	int		cbuf_cur;		/* the current char in cbuf */
 	mbstate_t	sp;			/* wide char processing state */
 	char		cbuf[ MAX_CBUF_SIZE ];	/* input character buffer */
-#endif /* HAVE_WCHAR */
 };
 
 
@@ -299,9 +282,7 @@ int	_cursesi_addbyte(WINDOW *, __LINE **, int *, int *, int , attr_t, int);
 int	_cursesi_addwchar(WINDOW *, __LINE **, int *, int *, const cchar_t *,
 			  int);
 int	_cursesi_waddbytes(WINDOW *, const char *, int, attr_t, int);
-#ifdef HAVE_WCHAR
 void     _cursesi_reset_wacs(SCREEN *);
-#endif /* HAVE_WCHAR */
 void     _cursesi_resetterm(SCREEN *);
 int      _cursesi_setterm(char *, SCREEN *);
 int	 __delay(void);
@@ -310,7 +291,6 @@ u_int	 __hash_more(const void *, size_t, u_int);
 void	 __id_subwins(WINDOW *);
 void	 __init_getch(SCREEN *);
 void	 __init_acs(SCREEN *);
-#ifdef HAVE_WCHAR
 void	 __init_get_wch(SCREEN *);
 void	 __init_wacs(SCREEN *);
 int	__cputwchar_args( wchar_t, void * );
@@ -319,7 +299,6 @@ void	__cursesi_free_nsp(nschar_t *);
 void	__cursesi_win_free_nsp(WINDOW *);
 void	__cursesi_putnsp(nschar_t *, const int, const int);
 void	__cursesi_chtype_to_cchar(chtype, cchar_t *);
-#endif /* HAVE_WCHAR */
 int	 __unget(wint_t);
 int	 __mvcur(int, int, int, int, int);
 WINDOW  *__newwin(SCREEN *, int, int, int, int, int);

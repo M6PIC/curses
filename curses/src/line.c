@@ -78,20 +78,6 @@ mvwhline(WINDOW *win, int y, int x, chtype ch, int count)
 int
 whline(WINDOW *win, chtype ch, int count)
 {
-#ifndef HAVE_WCHAR
-	int ocurx, n, i;
-
-	n = min(count, win->maxx - win->curx);
-	ocurx = win->curx;
-
-	if (!(ch & __CHARTEXT))
-		ch |= ACS_HLINE;
-	for (i = 0; i < n; i++)
-		mvwaddch(win, win->cury, ocurx + i, ch);
-		
-	wmove(win, win->cury, ocurx);
-	return OK;
-#else
 	cchar_t cch, *cchp;
 
 	if (ch & __CHARTEXT) {
@@ -101,7 +87,6 @@ whline(WINDOW *win, chtype ch, int count)
 		cchp = WACS_HLINE;
 
 	return whline_set(win, cchp, count);
-#endif
 }
 
 /*
@@ -147,21 +132,6 @@ mvwvline(WINDOW *win, int y, int x, chtype ch, int count)
 int
 wvline(WINDOW *win, chtype ch, int count)
 {
-#ifndef HAVE_WCHAR
-	int ocury, ocurx, n, i;
-
-	n = min(count, win->maxy - win->cury);
-	ocury = win->cury;
-	ocurx = win->curx;
-
-	if (!(ch & __CHARTEXT))
-		ch |= ACS_VLINE;
-	for (i = 0; i < n; i++)
-		mvwaddch(win, ocury + i, ocurx, ch);
-
-	wmove(win, ocury, ocurx);
-	return OK;
-#else
 	cchar_t cch, *cchp;
 
 	if (ch & __CHARTEXT) {
@@ -171,44 +141,28 @@ wvline(WINDOW *win, chtype ch, int count)
 		cchp = WACS_VLINE;
 
 	return wvline_set(win, cchp, count);
-#endif
 }
 
 int hline_set(const cchar_t *wch, int n)
 {
-#ifndef HAVE_WCHAR
-	return ERR;
-#else
 	return whline_set( stdscr, wch, n );
-#endif /* HAVE_WCHAR */
 }
 
 int mvhline_set(int y, int x, const cchar_t *wch, int n)
 {
-#ifndef HAVE_WCHAR
-	return ERR;
-#else
 	return mvwhline_set( stdscr, y, x, wch, n );
-#endif /* HAVE_WCHAR */
 }
 
 int mvwhline_set(WINDOW *win, int y, int x, const cchar_t *wch, int n)
 {
-#ifndef HAVE_WCHAR
-	return ERR;
-#else
 	if ( wmove( win, y , x ) == ERR )
 		return ERR;
 
 	return whline_set( win, wch, n );
-#endif /* HAVE_WCHAR */
 }
 
 int whline_set(WINDOW *win, const cchar_t *wch, int n)
 {
-#ifndef HAVE_WCHAR
-	return ERR;
-#else
 	int ocurx, wcn, i, cw;
 	cchar_t cc;
 
@@ -236,44 +190,28 @@ int whline_set(WINDOW *win, const cchar_t *wch, int n)
 		
 	wmove(win, win->cury, ocurx);
 	return OK;
-#endif /* HAVE_WCHAR */
 }
 
 int vline_set(const cchar_t *wch, int n)
 {
-#ifndef HAVE_WCHAR
-	return ERR;
-#else
 	return wvline_set( stdscr, wch, n );
-#endif /* HAVE_WCHAR */
 }
 
 int mvvline_set(int y, int x, const cchar_t *wch, int n)
 {
-#ifndef HAVE_WCHAR
-	return ERR;
-#else
 	return mvwvline_set( stdscr, y, x, wch, n );
-#endif /* HAVE_WCHAR */
 }
 
 int mvwvline_set(WINDOW *win, int y, int x, const cchar_t *wch, int n)
 {
-#ifndef HAVE_WCHAR
-	return ERR;
-#else
 	if ( wmove( win, y, x ) == ERR )
 		return ERR;
 
 	return wvline_set( win, wch, n );
-#endif /* HAVE_WCHAR */
 }
 
 int wvline_set(WINDOW *win, const cchar_t *wch, int n)
 {
-#ifndef HAVE_WCHAR
-	return ERR;
-#else
 	int ocury, ocurx, wcn, i;
 	cchar_t cc;
 
@@ -296,5 +234,4 @@ int wvline_set(WINDOW *win, const cchar_t *wch, int n)
 	}
 	wmove(win, ocury, ocurx);
 	return OK;
-#endif /* HAVE_WCHAR */
 }

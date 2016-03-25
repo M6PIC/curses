@@ -38,9 +38,7 @@
 #include "curses_private.h"
 
 /* prototypes for private functions */
-#ifdef HAVE_WCHAR
 static int __wgetn_wstr(WINDOW *, wchar_t *, int);
-#endif /* HAVE_WCHAR */
 
 /*
  * getn_wstr --
@@ -50,11 +48,7 @@ static int __wgetn_wstr(WINDOW *, wchar_t *, int);
 int
 getn_wstr(wchar_t *wstr, int n)
 {
-#ifndef HAVE_WCHAR
-	return ERR;
-#else
 	return wgetn_wstr(stdscr, wstr, n);
-#endif /* HAVE_WCHAR */
 }
 
 /*
@@ -64,11 +58,7 @@ getn_wstr(wchar_t *wstr, int n)
 int
 get_wstr(wchar_t *wstr)
 {
-#ifndef HAVE_WCHAR
-	return ERR;
-#else
 	return wget_wstr(stdscr, wstr);
-#endif /* HAVE_WCHAR */
 }
 
 /*
@@ -78,11 +68,7 @@ get_wstr(wchar_t *wstr)
 int
 mvgetn_wstr(int y, int x, wchar_t *wstr, int n)
 {
-#ifndef HAVE_WCHAR
-	return ERR;
-#else
 	return mvwgetn_wstr(stdscr, y, x, wstr, n);
-#endif /* HAVE_WCHAR */
 }
 
 /*
@@ -92,11 +78,7 @@ mvgetn_wstr(int y, int x, wchar_t *wstr, int n)
 int
 mvget_wstr(int y, int x, wchar_t *wstr)
 {
-#ifndef HAVE_WCHAR
-	return ERR;
-#else
 	return mvwget_wstr(stdscr, y, x, wstr);
-#endif /* HAVE_WCHAR */
 }
 
 /*
@@ -107,14 +89,10 @@ mvget_wstr(int y, int x, wchar_t *wstr)
 int
 mvwgetn_wstr(WINDOW *win, int y, int x, wchar_t *wstr, int n)
 {
-#ifndef HAVE_WCHAR
-	return ERR;
-#else
 	if (wmove(win, y, x) == ERR)
 		return ERR;
 
 	return wgetn_wstr(win, wstr, n);
-#endif /* HAVE_WCHAR */
 }
 
 /*
@@ -124,14 +102,10 @@ mvwgetn_wstr(WINDOW *win, int y, int x, wchar_t *wstr, int n)
 int
 mvwget_wstr(WINDOW *win, int y, int x, wchar_t *wstr)
 {
-#ifndef HAVE_WCHAR
-	return ERR;
-#else
 	if (wmove(win, y, x) == ERR)
 		return ERR;
 
 	return wget_wstr(win, wstr);
-#endif /* HAVE_WCHAR */
 }
 
 /*
@@ -141,11 +115,7 @@ mvwget_wstr(WINDOW *win, int y, int x, wchar_t *wstr)
 int
 wget_wstr(WINDOW *win, wchar_t *wstr)
 {
-#ifndef HAVE_WCHAR
-	return ERR;
-#else
 	return __wgetn_wstr(win, wstr, -1);
-#endif /* HAVE_WCHAR */
 }
 
 /*
@@ -156,9 +126,6 @@ wget_wstr(WINDOW *win, wchar_t *wstr)
 int
 wgetn_wstr(WINDOW *win, wchar_t *wstr, int n)
 {
-#ifndef HAVE_WCHAR
-	return ERR;
-#else
 	if (n < 1)
 		return (ERR);
 	if (n == 1) {
@@ -166,10 +133,8 @@ wgetn_wstr(WINDOW *win, wchar_t *wstr, int n)
 		return (ERR);
 	}
 	return __wgetn_wstr(win, wstr, n);
-#endif /* HAVE_WCHAR */
 }
 
-#ifdef HAVE_WCHAR
 /*
  * __wgetn_wstr --
  *	The actual implementation.
@@ -275,4 +240,3 @@ __wgetn_wstr(WINDOW *win, wchar_t *wstr, int n)
 	*wstr = L'\0';
 	return OK;
 }
-#endif /* HAVE_WCHAR */

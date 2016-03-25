@@ -107,9 +107,7 @@ wbkgd(WINDOW *win, chtype ch)
 			else
 				win->alines[y]->line[x].attr =
 				    ch & __ATTRIBUTES;
-#ifdef HAVE_WCHAR
 			SET_WCOL(win->alines[y]->line[x], 1);
-#endif
 		}
 	__touchwin(win);
 	return(OK);
@@ -134,34 +132,21 @@ getbkgd(WINDOW *win)
 
 int bkgrnd(const cchar_t *wch)
 {
-#ifndef HAVE_WCHAR
-	return ERR;
-#else
 	return wbkgrnd( stdscr, wch );
-#endif /* HAVE_WCHAR */
 }
 
 void bkgrndset(const cchar_t *wch)
 {
-#ifdef HAVE_WCHAR
 	wbkgrndset( stdscr, wch );
-#endif /* HAVE_WCHAR */
 }
 
 int getbkgrnd(cchar_t *wch)
 {
-#ifndef HAVE_WCHAR
-	return ERR;
-#else
 	return wgetbkgrnd( stdscr, wch );
-#endif /* HAVE_WCHAR */
 }
 
 int wbkgrnd(WINDOW *win, const cchar_t *wch)
 {
-#ifndef HAVE_WCHAR
-	return ERR;
-#else
 /* 	int	y, x, i; */
 	attr_t battr;
 /* 	nschar_t *np, *tnp, *pnp; */
@@ -184,12 +169,10 @@ int wbkgrnd(WINDOW *win, const cchar_t *wch)
 	wbkgrndset(win, wch);
 	__touchwin(win);
 	return OK;
-#endif /* HAVE_WCHAR */
 }
 
 void wbkgrndset(WINDOW *win, const cchar_t *wch)
 {
-#ifdef HAVE_WCHAR
 	attr_t battr;
 	nschar_t *np, *tnp;
 	int i;
@@ -250,14 +233,10 @@ void wbkgrndset(WINDOW *win, const cchar_t *wch)
 		battr |= __default_color;
 	win->battr = battr;
 	SET_BGWCOL((*win), 1);
-#endif /* HAVE_WCHAR */
 }
 
 int wgetbkgrnd(WINDOW *win, cchar_t *wch)
 {
-#ifndef HAVE_WCHAR
-	return ERR;
-#else
 	nschar_t *np;
 
 	/* Background attributes (check colour). */
@@ -276,5 +255,4 @@ int wgetbkgrnd(WINDOW *win, cchar_t *wch)
 	}
 
 	return OK;
-#endif /* HAVE_WCHAR */
 }

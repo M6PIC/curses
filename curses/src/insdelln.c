@@ -64,9 +64,7 @@ winsdelln(WINDOW *win, int nlines)
 {
 	int     y, i, last;
 	__LINE *temp;
-#ifdef HAVE_WCHAR
 	__LDATA *lp;
-#endif /* HAVE_WCHAR */
 	attr_t	attr;
 
 #ifdef DEBUG
@@ -112,16 +110,12 @@ winsdelln(WINDOW *win, int nlines)
 			for (i = 0; i < win->maxx; i++) {
 				win->alines[y]->line[i].ch = win->bch;
 				win->alines[y]->line[i].attr = attr;
-#ifndef HAVE_WCHAR
-				win->alines[y]->line[i].ch = win->bch;
-#else
 				win->alines[y]->line[i].ch
 					= ( wchar_t )btowc(( int ) win->bch );
 				lp = &win->alines[y]->line[i];
 				if (_cursesi_copy_nsp(win->bnsp, lp) == ERR)
 					return ERR;
 				SET_WCOL( *lp, 1 );
-#endif /* HAVE_WCHAR */
 			}
 		for (y = last; y >= win->cury; --y)
 			__touchline(win, y, 0, (int) win->maxx - 1);
@@ -156,16 +150,12 @@ winsdelln(WINDOW *win, int nlines)
 			for (i = 0; i < win->maxx; i++) {
 				win->alines[y]->line[i].ch = win->bch;
 				win->alines[y]->line[i].attr = attr;
-#ifndef HAVE_WCHAR
-				win->alines[y]->line[i].ch = win->bch;
-#else
 				win->alines[y]->line[i].ch
 					= (wchar_t)btowc((int) win->bch);
 				lp = &win->alines[y]->line[i];
 				SET_WCOL( *lp, 1 );
 				if (_cursesi_copy_nsp(win->bnsp, lp) == ERR)
 					return ERR;
-#endif /* HAVE_WCHAR */
 			}
 		for (y = win->cury; y < last; y++)
 			__touchline(win, y, 0, (int) win->maxx - 1);

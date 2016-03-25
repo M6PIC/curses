@@ -42,17 +42,12 @@
 #include "curses_private.h"
 #include "keymap.h"
 
-#ifdef HAVE_WCHAR
 static short   wstate;		  /* state of the wcinkey function */
-#endif /* HAVE_WCHAR */
 extern short state;		/* storage declared in getch.c */
 
 /* prototypes for private functions */
-#ifdef HAVE_WCHAR
 static int inkey(wchar_t *wc, int to, int delay);
-#endif /* HAVE_WCHAR */
 
-#ifdef HAVE_WCHAR
 /*
  * __init_get_wch - initialise all the pointers & structures needed to make
  * get_wch work in keypad mode.
@@ -65,10 +60,8 @@ __init_get_wch(SCREEN *screen)
 	memset( &screen->cbuf, 0, sizeof(screen->cbuf));
 	screen->cbuf_head = screen->cbuf_tail = screen->cbuf_cur = 0;
 }
-#endif /* HAVE_WCHAR */
 
 
-#ifdef HAVE_WCHAR
 /*
  * inkey - do the work to process keyboard input, check for multi-key
  * sequences and return the appropriate symbol if we get a match.
@@ -441,7 +434,6 @@ inkey(wchar_t *wc, int to, int delay)
 		}
 	}
 }
-#endif /* HAVE_WCHAR */
 
 /*
  * get_wch --
@@ -450,11 +442,7 @@ inkey(wchar_t *wc, int to, int delay)
 int
 get_wch(wint_t *ch)
 {
-#ifndef HAVE_WCHAR
-	return ERR;
-#else
 	return wget_wch(stdscr, ch);
-#endif /* HAVE_WCHAR */
 }
 
 /*
@@ -464,11 +452,7 @@ get_wch(wint_t *ch)
 int
 mvget_wch(int y, int x, wint_t *ch)
 {
-#ifndef HAVE_WCHAR
-	return ERR;
-#else
 	return mvwget_wch(stdscr, y, x, ch);
-#endif /* HAVE_WCHAR */
 }
 
 /*
@@ -479,14 +463,10 @@ mvget_wch(int y, int x, wint_t *ch)
 int
 mvwget_wch(WINDOW *win, int y, int x, wint_t *ch)
 {
-#ifndef HAVE_WCHAR
-	return ERR;
-#else
 	if (wmove(win, y, x) == ERR)
 		return ERR;
 
 	return wget_wch(win, ch);
-#endif /* HAVE_WCHAR */
 }
 
 /*
@@ -496,9 +476,6 @@ mvwget_wch(WINDOW *win, int y, int x, wint_t *ch)
 int
 wget_wch(WINDOW *win, wint_t *ch)
 {
-#ifndef HAVE_WCHAR
-	return ERR;
-#else
 	int ret, weset;
 	int c;
 	FILE *infd = _cursesi_screen->infd;
@@ -639,7 +616,6 @@ wget_wch(WINDOW *win, wint_t *ch)
 	if ( ret == KEY_CODE_YES )
 		return KEY_CODE_YES;
 	return ( inp < 0 ? ERR : OK );
-#endif /* HAVE_WCHAR */
 }
 
 /*

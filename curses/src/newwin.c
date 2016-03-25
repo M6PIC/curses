@@ -146,13 +146,9 @@ __newwin(SCREEN *screen, int nlines, int ncols, int by, int bx, int ispad)
 			lp->flags = 0;
 		for (sp = lp->line, j = 0; j < maxx; j++, sp++) {
 			sp->attr = 0;
-#ifndef HAVE_WCHAR
-			sp->ch = win->bch;
-#else
 			sp->ch = ( wchar_t )btowc(( int ) win->bch );
 			sp->nsp = NULL;
 			SET_WCOL( *sp, 1 );
-#endif /* HAVE_WCHAR */
 		}
 		lp->hash = __hash((char *)(void *)lp->line,
 		    (size_t) (ncols * __LDATASIZE));
@@ -214,11 +210,9 @@ __set_subwin(WINDOW *orig, WINDOW *win)
 {
 	int     i;
 	__LINE *lp, *olp;
-#ifdef HAVE_WCHAR
 	__LDATA *cp;
 	int j;
 	nschar_t *np;
-#endif /* HAVE_WCHAR */
 
 	win->ch_off = win->begx - orig->begx;
 	/* Point line pointers to line space. */
@@ -231,10 +225,6 @@ __set_subwin(WINDOW *orig, WINDOW *win)
 		lp->line = &olp->line[win->ch_off];
 		lp->firstchp = &olp->firstch;
 		lp->lastchp = &olp->lastch;
-#ifndef HAVE_WCHAR
-		lp->hash = __hash((char *)(void *)lp->line,
-		    (size_t) (win->maxx * __LDATASIZE));
-#else
 		for ( cp = lp->line, j = 0; j < win->maxx; j++, cp++ ) {
 			lp->hash = __hash_more( &cp->ch,
 				sizeof( wchar_t ), lp->hash );
@@ -249,7 +239,6 @@ __set_subwin(WINDOW *orig, WINDOW *win)
 				}
 			}
 		}
-#endif /* HAVE_WCHAR */
 	}
 
 #ifdef DEBUG
@@ -364,10 +353,8 @@ __makenew(SCREEN *screen, int nlines, int ncols, int by, int bx, int sub,
 	win->flags = (__IDLINE | __IDCHAR);
 	win->delay = -1;
 	win->wattr = 0;
-#ifdef HAVE_WCHAR
 	win->bnsp = NULL;
 	SET_BGWCOL( *win, 1 );
-#endif /* HAVE_WCHAR */
 	win->scr_t = 0;
 	win->scr_b = win->maxy - 1;
 	if (ispad) {

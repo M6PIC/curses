@@ -71,24 +71,16 @@ werase(WINDOW *win)
 		start = win->alines[y]->line;
 		end = &start[win->maxx];
 		for (sp = start; sp < end; sp++)
-#ifndef HAVE_WCHAR
-			if (sp->ch != win->bch || sp->attr != 0) {
-#else
 			if (sp->ch != ( wchar_t )btowc(( int ) win->bch ) ||
 			    (sp->attr & WA_ATTRIBUTES) != 0 || sp->nsp) {
-#endif /* HAVE_WCHAR */
 				if (sp->attr & __ALTCHARSET)
 					sp->attr = attr | __ALTCHARSET;
 				else
 					sp->attr = attr;
-#ifdef HAVE_WCHAR
 				sp->ch = ( wchar_t )btowc(( int ) win->bch);
 				if (_cursesi_copy_nsp(win->bnsp, sp) == ERR)
 					return ERR;
 				SET_WCOL( *sp, 1 );
-#else
-				sp->ch = win->bch;
-#endif /* HAVE_WCHAR */
 			}
 	}
 	/*

@@ -35,12 +35,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#ifdef HAVE_WCHAR
 static int __putnsp(nschar_t *, FILE *);
 static int __getnsp(nschar_t *, FILE *);
-#endif /* HAVE_WCHAR */
 
-#ifdef HAVE_WCHAR
 /*
  * __putnsp --
  *	Write non-spacing character chain to file, consisting of:
@@ -64,7 +61,6 @@ __putnsp(nschar_t *nsp, FILE *fp)
 
 	return OK;
 }
-#endif /* HAVE_WCHAR */
 
 /*
  * putwin --
@@ -98,11 +94,9 @@ putwin(WINDOW *win, FILE *fp)
 	/* Window parameters */
 	if (fwrite(win, sizeof(WINDOW), 1, fp) != 1)
 		return ERR;
-#ifdef HAVE_WCHAR
 	/* Background non-spacing character */
 	if (__putnsp(win->bnsp, fp) == ERR)
 		return ERR;
-#endif /* HAVE_WCHAR */
 
 	/* Lines and line data */
 	for (y = 0; y < win->maxy; y++)
@@ -112,18 +106,15 @@ putwin(WINDOW *win, FILE *fp)
 				return ERR;
 			if (fwrite(&sp->attr, sizeof(attr_t), 1, fp) != 1)
 				return ERR;
-#ifdef HAVE_WCHAR
 			if (sp->nsp != NULL) {
 				if (__putnsp(win->bnsp, fp) == ERR)
 					return ERR;
 			}
-#endif /* HAVE_WCHAR */
 		}
 
 	return OK;
 }
 
-#ifdef HAVE_WCHAR
 /*
  * __getnsp --
  *	Read non-spacing character chain from file
@@ -157,7 +148,6 @@ __getnsp(nschar_t *nsp, FILE *fp)
 	}
 	return OK;
 }
-#endif /* HAVE_WCHAR */
 
 /*
  * getwin --
@@ -208,10 +198,8 @@ getwin(FILE *fp)
 	wtmp = NULL;
 	__swflags(win);
 
-#ifdef HAVE_WCHAR
 	if (__getnsp(win->bnsp, fp) == ERR)
 		goto error1;
-#endif /* HAVE_WCHAR */
 
 	/* Lines and line data */
 	for (y = 0; y < win->maxy; y++) {
@@ -221,12 +209,10 @@ getwin(FILE *fp)
 				goto error1;
 			if (fread(&sp->attr, sizeof(attr_t), 1, fp) != 1)
 				goto error1;
-#ifdef HAVE_WCHAR
 			if (sp->nsp != NULL) {
 				if (__getnsp(win->bnsp, fp) == ERR)
 					goto error1;
 			}
-#endif /* HAVE_WCHAR */
 		}
 		__touchline(win, y, 0, (int) win->maxx - 1);
 	}

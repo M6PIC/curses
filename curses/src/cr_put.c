@@ -397,13 +397,6 @@ dontcr:while (outline < destline) {
 			if (plodflg)	/* Avoid a complex calculation. */
 				plodcnt--;
 			else {
-#ifndef HAVE_WCHAR
-				i = curscr->alines[outline]->line[outcol].ch
-				    & __CHARTEXT;
-				if (curscr->alines[outline]->line[outcol].attr
-				    == curscr->wattr)
-					__cputchar(i);
-#else
 				if ((curscr->alines[outline]->line[outcol].attr
 				    & WA_ATTRIBUTES)
 				    == curscr->wattr) {
@@ -428,7 +421,6 @@ dontcr:while (outline < destline) {
 						goto nondes;
 					}
 				}
-#endif /* HAVE_WCHAR */
 				else
 					goto nondes;
 			}

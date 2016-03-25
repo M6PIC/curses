@@ -47,11 +47,7 @@
 int
 ins_wch(const cchar_t *wch)
 {
-#ifndef HAVE_WCHAR
-	return ERR;
-#else
 	return wins_wch(stdscr, wch);
-#endif /* HAVE_WCHAR */
 }
 
 /*
@@ -61,11 +57,7 @@ ins_wch(const cchar_t *wch)
 int
 mvins_wch(int y, int x, const cchar_t *wch)
 {
-#ifndef HAVE_WCHAR
-	return ERR;
-#else
 	return mvwins_wch(stdscr, y, x, wch);
-#endif /* HAVE_WCHAR */
 }
 
 /*
@@ -75,14 +67,10 @@ mvins_wch(int y, int x, const cchar_t *wch)
 int
 mvwins_wch(WINDOW *win, int y, int x, const cchar_t *wch)
 {
-#ifndef HAVE_WCHAR
-	return ERR;
-#else
 	if (wmove(win, y, x) == ERR)
 		return ERR;
 
 	return wins_wch(stdscr, wch);
-#endif /* HAVE_WCHAR */
 }
 
 /*
@@ -92,9 +80,6 @@ mvwins_wch(WINDOW *win, int y, int x, const cchar_t *wch)
 int
 wins_wch(WINDOW *win, const cchar_t *wch)
 {
-#ifndef HAVE_WCHAR
-	return ERR;
-#else
 	__LDATA	*start, *temp1, *temp2;
 	__LINE *lnp;
 	int cw, pcw, x, y, sx, ex, newx, i, tabsize;
@@ -245,5 +230,4 @@ wins_wch(WINDOW *win, const cchar_t *wch)
 	__touchline(win, y, sx, (int) win->maxx - 1);
 
 	return OK;
-#endif /* HAVE_WCHAR */
 }

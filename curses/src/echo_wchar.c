@@ -44,11 +44,7 @@
 int
 echo_wchar(const cchar_t *wch)
 {
-#ifndef HAVE_WCHAR
-	return ERR;
-#else
 	return wecho_wchar(stdscr, wch);
-#endif /* HAVE_WCHAR */
 }
 
 /*
@@ -58,16 +54,12 @@ echo_wchar(const cchar_t *wch)
 int
 wecho_wchar(WINDOW *win, const cchar_t *wch)
 {
-#ifndef HAVE_WCHAR
-	return ERR;
-#else
 	int retval;
 
 	retval = wadd_wch(win, wch);
 	if (retval == OK)
 		 retval = wrefresh(win);
 	return retval;
-#endif /* HAVE_WCHAR */
 }
 
 /*
@@ -78,9 +70,6 @@ wecho_wchar(WINDOW *win, const cchar_t *wch)
 int
 pecho_wchar(WINDOW *pad, const cchar_t *wch)
 {
-#ifndef HAVE_WCHAR
-	return ERR;
-#else
 	int retval;
 
 	retval = wadd_wch(pad, wch);
@@ -88,5 +77,4 @@ pecho_wchar(WINDOW *pad, const cchar_t *wch)
 		 retval = prefresh(pad, pad->pbegy, pad->pbegx,
 			pad->sbegy, pad->sbegx, pad->smaxy, pad->smaxx);
 	return retval;
-#endif /* HAVE_WCHAR */
 }

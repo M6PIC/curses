@@ -132,11 +132,7 @@ winchnstr(WINDOW *win, chtype *chstr, int n)
 
 	while (start <= end) {
 		/* or in the attributes but strip out internal flags */
-#ifdef HAVE_WCHAR
 		*chstr = start->ch | (start->attr & ~__ACS_IS_WACS);
-#else
-		*chstr = start->ch | start->attr;
-#endif
 		chstr++;
 		start++;
 	}

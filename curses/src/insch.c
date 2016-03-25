@@ -102,11 +102,9 @@ winsch(WINDOW *win, chtype ch)
 		temp1->attr |= (win->battr & ~__COLOR);
 	else
 		temp1->attr |= win->battr;
-#ifdef HAVE_WCHAR
 	if (_cursesi_copy_nsp(win->bnsp, temp1) == ERR)
 		return ERR;
 	SET_WCOL(*temp1, 1);
-#endif /* HAVE_WCHAR */
 	__touchline(win, (int) win->cury, (int) win->curx, (int) win->maxx - 1);
 	if (win->cury == LINES - 1 &&
 	    (win->alines[LINES - 1]->line[COLS - 1].ch != ' ' ||

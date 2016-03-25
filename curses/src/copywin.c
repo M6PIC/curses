@@ -49,10 +49,8 @@ int copywin(const WINDOW *srcwin, WINDOW *dstwin,
 {
 	int dcol;
 	__LDATA *sp, *end;
-#ifdef HAVE_WCHAR
 	cchar_t cc;
 	nschar_t *np;
-#endif /* HAVE_WCHAR */
 
 	/* overwrite() and overlay() can come here with -ve srcwin coords */
 	if (sminrow < 0) {
@@ -105,9 +103,6 @@ int copywin(const WINDOW *srcwin, WINDOW *dstwin,
 			 */
 			if ((dooverlay && !isspace(sp->ch)) || !dooverlay) {
 				wmove(dstwin, dminrow, dcol);
-#ifndef HAVE_WCHAR
-				__waddch(dstwin, sp);
-#else
 				cc.vals[0] = sp->ch;
 				cc.attributes = sp->attr;
 				cc.elements = 1;
@@ -120,7 +115,6 @@ int copywin(const WINDOW *srcwin, WINDOW *dstwin,
 					}
 				}
 				wadd_wch(dstwin, &cc);
-#endif /* HAVE_WCHAR */
 			}
 		}
 	}
