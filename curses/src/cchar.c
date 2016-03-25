@@ -34,11 +34,6 @@
  * SUCH DAMAGE.
  */
 
-#include <sys/cdefs.h>
-#ifndef lint
-__RCSID("$NetBSD: cchar.c,v 1.5 2010/12/16 17:42:28 wiz Exp $");
-#endif						  /* not lint */
-
 #include <string.h>
 
 #include "curses.h"

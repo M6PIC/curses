@@ -29,11 +29,6 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <sys/cdefs.h>
-#ifndef lint
-__RCSID("$NetBSD: border.c,v 1.15 2013/05/05 14:23:16 jdc Exp $");
-#endif				/* not lint */
-
 #include <stdlib.h>
 #include <string.h>
 

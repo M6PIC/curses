@@ -29,15 +29,6 @@
  * SUCH DAMAGE.
  */
 
-#include <sys/cdefs.h>
-#ifndef lint
-#if 0
-static char sccsid[] = "@(#)tstp.c	8.3 (Berkeley) 5/4/94";
-#else
-__RCSID("$NetBSD: tstp.c,v 1.40 2013/10/15 13:00:52 christos Exp $");
-#endif
-#endif				/* not lint */
-
 #include <sys/ioctl.h>
 
 #include <errno.h>
@@ -52,7 +43,7 @@ static int tstp_set = 0;
 static int winch_set = 0;
 
 static void (*otstpfn)
-__P((int)) = SIG_DFL;
+(int) = SIG_DFL;
 
 static struct sigaction	owsa;
 #ifndef TCSASOFT

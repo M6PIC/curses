@@ -29,11 +29,6 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <sys/cdefs.h>
-#ifndef lint
-__RCSID("$NetBSD: timeout.c,v 1.8 2009/11/04 21:24:57 dsl Exp $");
-#endif				/* not lint */
-
 #include "curses.h"
 #include "curses_private.h"
 

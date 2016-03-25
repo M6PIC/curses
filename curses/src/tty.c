@@ -29,21 +29,12 @@
  * SUCH DAMAGE.
  */
 
-#include <sys/cdefs.h>
-#ifndef lint
-#if 0
-static char sccsid[] = "@(#)tty.c	8.6 (Berkeley) 1/10/95";
-#else
-__RCSID("$NetBSD: tty.c,v 1.43 2011/08/29 11:07:38 christos Exp $");
-#endif
-#endif				/* not lint */
-
 #include <sys/types.h>
 
 #include <stdlib.h>
 #include <termios.h>
 #include <unistd.h>
-#include <sys/fcntl.h>
+#include <fcntl.h>
 #include <sys/ioctl.h>
 
 #include "curses.h"
@@ -581,12 +572,12 @@ isendwin(void)
 	return _cursesi_screen->endwin ? TRUE : FALSE;
 }
 
-int
+/*int
 flushinp(void)
 {
 	(void) fpurge(_cursesi_screen->infd);
 	return OK;
-}
+}*/
 
 /*
  * The following routines, savetty and resetty are completely useless and

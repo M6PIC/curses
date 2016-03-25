@@ -29,15 +29,6 @@
  * SUCH DAMAGE.
  */
 
-#include <sys/cdefs.h>
-#ifndef lint
-#if 0
-static char sccsid[] = "@(#)cr_put.c	8.3 (Berkeley) 5/4/94";
-#else
-__RCSID("$NetBSD: cr_put.c,v 1.31 2011/10/03 12:32:15 roy Exp $");
-#endif
-#endif				/* not lint */
-
 #include <string.h>
 
 #include "curses.h"
@@ -58,10 +49,10 @@ mvcur(int ly, int lx, int y, int x)
 	return (__mvcur(ly, lx, y, x, 0));
 }
 
-static void fgoto __P((int));
-static int plod __P((int, int));
-static int plodput __P((int));
-static int tabcol __P((int, int));
+static void fgoto (int);
+static int plod (int, int);
+static int plodput (int);
+static int tabcol (int, int);
 
 static int outcol, outline, destcol, destline;
 

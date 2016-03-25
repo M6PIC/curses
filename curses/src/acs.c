@@ -29,10 +29,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <sys/cdefs.h>
-#ifndef lint
-__RCSID("$NetBSD: acs.c,v 1.20 2012/04/21 12:27:27 roy Exp $");
-#endif				/* not lint */
+#include <string.h>
 
 #include "curses.h"
 #include "curses_private.h"
@@ -160,7 +157,7 @@ __init_wacs(SCREEN *screen)
 	if (!strcmp(setlocale(LC_CTYPE, NULL), "C"))
 		setlocale(LC_CTYPE, "");
 	lstr = nl_langinfo(CODESET);
-	_DIAGASSERT(lstr);
+	assert(lstr);
 	if (strcasecmp(lstr, "UTF-8")) {
 #ifdef DEBUG
 		__CTRACE(__CTRACE_INIT, "__init_wacs: setting defaults\n" );

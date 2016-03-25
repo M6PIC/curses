@@ -29,15 +29,6 @@
  * SUCH DAMAGE.
  */
 
-#include <sys/cdefs.h>
-#ifndef lint
-#if 0
-static char sccsid[] = "@(#)printw.c	8.3 (Berkeley) 5/4/94";
-#else
-__RCSID("$NetBSD: printw.c,v 1.22 2011/07/17 20:54:34 joerg Exp $");
-#endif
-#endif				/* not lint */
-
 #include <stdarg.h>
 
 #include "curses.h"
@@ -47,7 +38,7 @@ __RCSID("$NetBSD: printw.c,v 1.22 2011/07/17 20:54:34 joerg Exp $");
  * printw and friends.
  */
 
-static int __winwrite __P((void *, const char *, int));
+static int __winwrite (void *, const char *, int);
 
 /*
  * printw --
@@ -138,7 +129,7 @@ __winwrite(cookie, buf, n)
  * vw_printw --
  *	This routine actually executes the printf and adds it to the window.
  */
-int
+/*int
 vw_printw(WINDOW *win, const char *fmt, va_list ap)
 {
 	FILE   *f;
@@ -149,4 +140,4 @@ vw_printw(WINDOW *win, const char *fmt, va_list ap)
 	return (fclose(f) ? ERR : OK);
 }
 
-__strong_alias(vwprintw, vw_printw)
+__strong_alias(vwprintw, vw_printw)*/

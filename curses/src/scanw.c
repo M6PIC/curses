@@ -29,15 +29,6 @@
  * SUCH DAMAGE.
  */
 
-#include <sys/cdefs.h>
-#ifndef lint
-#if 0
-static char sccsid[] = "@(#)scanw.c	8.3 (Berkeley) 5/4/94";
-#else
-__RCSID("$NetBSD: scanw.c,v 1.21 2011/07/17 20:54:34 joerg Exp $");
-#endif
-#endif				/* not lint */
-
 /*
  * scanw and friends.
  */
@@ -122,4 +113,3 @@ vw_scanw(WINDOW *win, const char *fmt, va_list ap)
 	    vsscanf(buf, fmt, ap) : ERR);
 }
 
-__strong_alias(vwscanw, vw_scanw)

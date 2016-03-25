@@ -34,11 +34,6 @@
  * SUCH DAMAGE.
  */
 
-#include <sys/cdefs.h>
-#ifndef lint
-__RCSID("$NetBSD: get_wstr.c,v 1.3 2008/04/14 20:33:59 jdc Exp $");
-#endif						  /* not lint */
-
 #include "curses.h"
 #include "curses_private.h"
 
@@ -66,8 +61,6 @@ getn_wstr(wchar_t *wstr, int n)
  * get_wstr --
  *	Get a string from stdscr starting at (cury, curx).
  */
-__warn_references(get_wstr,
-	"warning: this program uses get_wstr(), which is unsafe.")
 int
 get_wstr(wchar_t *wstr)
 {
@@ -96,8 +89,6 @@ mvgetn_wstr(int y, int x, wchar_t *wstr, int n)
  * mvget_wstr --
  *	  Get a string from stdscr starting at (y, x).
  */
-__warn_references(mvget_wstr,
-	"warning: this program uses mvget_wstr(), which is unsafe.")
 int
 mvget_wstr(int y, int x, wchar_t *wstr)
 {
@@ -130,8 +121,6 @@ mvwgetn_wstr(WINDOW *win, int y, int x, wchar_t *wstr, int n)
  * mvwget_wstr --
  *	  Get a string from the given window starting at (y, x).
  */
-__warn_references(mvget_wstr,
-	"warning: this program uses mvget_wstr(), which is unsafe.")
 int
 mvwget_wstr(WINDOW *win, int y, int x, wchar_t *wstr)
 {
@@ -149,8 +138,6 @@ mvwget_wstr(WINDOW *win, int y, int x, wchar_t *wstr)
  * wget_wstr --
  *	Get a string starting at (cury, curx).
  */
-__warn_references(wget_wstr,
-	"warning: this program uses wget_wstr(), which is unsafe.")
 int
 wget_wstr(WINDOW *win, wchar_t *wstr)
 {

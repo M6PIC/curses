@@ -41,7 +41,6 @@
 #define	_CURSES_H_
 
 #include <sys/types.h>
-#include <sys/cdefs.h>
 #include <wchar.h>
 
 #include <stdio.h>
@@ -527,7 +526,6 @@ extern int	 TABSIZE;		/* Size of a tab. */
 
 #else
 /* Use functions not macros... */
-__BEGIN_DECLS
 int	 addbytes(const char *, int);
 int	 addch(chtype);
 int	 addchnstr(const chtype *, int);
@@ -606,7 +604,6 @@ int	 mvwgetnstr(WINDOW *, int, int, char *, int);
 int	 mvwgetstr(WINDOW *, int, int, char *);
 chtype	 mvwinch(WINDOW *, int, int);
 int	 mvwinsch(WINDOW *, int, int, chtype);
-__END_DECLS
 #endif /* _CURSES_USE_MACROS */
 
 #define	getyx(w, y, x)		(y) = getcury(w), (x) = getcurx(w)
@@ -615,7 +612,6 @@ __END_DECLS
 #define	getparyx(w, y, x)	(y) = getpary(w), (x) = getparx(w)
 
 /* Public function prototypes. */
-__BEGIN_DECLS
 int	 assume_default_colors(short, short);
 int	 baudrate(void);
 int	 beep(void);
@@ -677,8 +673,8 @@ int	 meta(WINDOW *, bool);
 int	 mvcur(int, int, int, int);
 int      mvderwin(WINDOW *, int, int);
 int	 mvhline(int, int, chtype, int);
-int	 mvprintw(int, int, const char *, ...) __printflike(3, 4);
-int	 mvscanw(int, int, const char *, ...) __scanflike(3, 4);
+int	 mvprintw(int, int, const char *, ...) __attribute__((__format__(__printf__, 3, 4)));
+int	 mvscanw(int, int, const char *, ...) __attribute__((__format__(__scanf__, 3, 4)));
 int	 mvvline(int, int, chtype, int);
 int	 mvwhline(WINDOW *, int, int, chtype, int);
 int	 mvwvline(WINDOW *, int, int, chtype, int);
@@ -687,8 +683,8 @@ int	 mvwinchnstr(WINDOW *, int, int, chtype *, int);
 int	 mvwinchstr(WINDOW *, int, int, chtype *);
 int	 mvwinnstr(WINDOW *, int, int, char *, int);
 int	 mvwinstr(WINDOW *, int, int, char *);
-int	 mvwprintw(WINDOW *, int, int, const char *, ...) __printflike(4, 5);
-int	 mvwscanw(WINDOW *, int, int, const char *, ...) __scanflike(4, 5);
+int	 mvwprintw(WINDOW *, int, int, const char *, ...) __attribute__((__format__(__printf__, 4, 5)));
+int	 mvwscanw(WINDOW *, int, int, const char *, ...) __attribute__((__format__(__scanf__, 4, 5)));
 int	 napms(int);
 WINDOW	*newpad(int, int);
 SCREEN  *newterm(char *, FILE *, FILE *);
@@ -708,7 +704,7 @@ int	 pair_content(short, short *, short *);
 int	 pechochar(WINDOW *, const chtype);
 int	 pnoutrefresh(WINDOW *, int, int, int, int, int, int);
 int	 prefresh(WINDOW *, int, int, int, int, int, int);
-int	 printw(const char *, ...) __printflike(1, 2);
+int	 printw(const char *, ...) __attribute__((__format__(__printf__, 1, 2)));
 int	 putwin(WINDOW *, FILE *);
 void	 qiflush(void);
 int	 raw(void);
@@ -718,7 +714,7 @@ int	 reset_shell_mode(void);
 int	 resetty(void);
 int      resizeterm(int, int);
 int	 savetty(void);
-int	 scanw(const char *, ...) __scanflike(1, 2);
+int	 scanw(const char *, ...) __attribute__((__format__(__scanf__, 1, 2)));
 int	 scroll(WINDOW *);
 int	 scrollok(WINDOW *, bool);
 int	 setterm(char *);
@@ -735,10 +731,10 @@ int	 ungetch(int);
 int	 untouchwin(WINDOW *);
 int	 use_default_colors(void);
 int	 vline(chtype, int);
-int	 vw_printw(WINDOW *, const char *, __va_list) __printflike(2, 0);
-int	 vw_scanw(WINDOW *, const char *, __va_list) __scanflike(2, 0);
-int	 vwprintw(WINDOW *, const char *, __va_list) __printflike(2, 0);
-int	 vwscanw(WINDOW *, const char *, __va_list) __scanflike(2, 0);
+int	 vw_printw(WINDOW *, const char *, va_list) __attribute__((__format__(__printf__, 2, 0)));
+int	 vw_scanw(WINDOW *, const char *, va_list) __attribute__((__format__(__scanf__, 2, 0)));
+int	 vwprintw(WINDOW *, const char *, va_list) __attribute__((__format__(__printf__, 2, 0)));
+int	 vwscanw(WINDOW *, const char *, va_list) __attribute__((__format__(__scanf__, 2, 0)));
 int	 waddch(WINDOW *, chtype);
 int	 waddchnstr(WINDOW *, const chtype *, int);
 int	 waddchstr(WINDOW *, const chtype *);
@@ -777,11 +773,11 @@ int	 winsertln(WINDOW *);
 int	 winstr(WINDOW *, char *);
 int	 wmove(WINDOW *, int, int);
 int	 wnoutrefresh(WINDOW *);
-int	 wprintw(WINDOW *, const char *, ...)  __printflike(2, 3);
+int	 wprintw(WINDOW *, const char *, ...)  __attribute__((__format__(__printf__, 2, 3)));
 int	 wredrawln(WINDOW *, int, int);
 int	 wrefresh(WINDOW *);
 int      wresize(WINDOW *, int, int);
-int	 wscanw(WINDOW *, const char *, ...) __scanflike(2, 3);
+int	 wscanw(WINDOW *, const char *, ...) __attribute__((__format__(__scanf__, 2, 3)));
 int	 wscrl(WINDOW *, int);
 int	 wsetscrreg(WINDOW *, int, int);
 int	 wstandend(WINDOW *);
@@ -928,6 +924,5 @@ int	 __waddbytes(WINDOW *, const char *, int, attr_t);
 #ifdef HAVE_WCHAR
 int __cputwchar( wchar_t );
 #endif /* HAVE_WCHAR */
-__END_DECLS
 
 #endif /* !_CURSES_H_ */

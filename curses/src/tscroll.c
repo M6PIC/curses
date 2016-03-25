@@ -29,22 +29,14 @@
  * SUCH DAMAGE.
  */
 
-#include <sys/cdefs.h>
-
-#ifndef lint
-#if 0
-static char sccsid[] = "@(#)tscroll.c	8.4 (Berkeley) 7/27/94";
-#else
-__RCSID("$NetBSD: tscroll.c,v 1.13 2007/01/21 13:25:36 jdc Exp $");
-#endif
-#endif				/* not lint */
-
 #include <string.h>
 #include <stdarg.h>
 #include "curses.h"
 #include "curses_private.h"
 
 #define	MAXRETURNSIZE	64
+
+char	*__parse_cap (char const *cap, ...);
 
 char   *
 __tscroll(const char *cap, int n1, int n2)

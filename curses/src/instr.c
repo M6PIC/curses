@@ -35,11 +35,6 @@
  * THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <sys/cdefs.h>
-#ifndef lint
-__RCSID("$NetBSD: instr.c,v 1.4 2011/08/07 10:54:53 blymn Exp $");
-#endif				/* not lint */
-
 #include "curses.h"
 #include "curses_private.h"
 
@@ -49,8 +44,6 @@ __RCSID("$NetBSD: instr.c,v 1.4 2011/08/07 10:54:53 blymn Exp $");
  * instr, innstr --
  *	Return a string of characters at cursor position from stdscr.
  */
-__warn_references(instr,
-    "warning: this program uses instr(), which is unsafe.")
 int
 instr(char *str)
 {
@@ -68,8 +61,6 @@ innstr(char *str, int n)
  *      Return a string of characters at position (y, x) from stdscr.
  *	XXX: should be multi-byte characters for SUSv2.
  */
-__warn_references(mvinstr,
-    "warning: this program uses mvinstr(), which is unsafe.")
 int
 mvinstr(int y, int x, char *str)
 {
@@ -87,8 +78,6 @@ mvinnstr(int y, int x, char *str, int n)
  *      Return an array characters at position (y, x) from the given window.
  *	XXX: should be multi-byte characters for SUSv2.
  */
-__warn_references(mvwinstr,
-    "warning: this program uses mvwinstr(), which is unsafe.")
 int
 mvwinstr(WINDOW *win, int y, int x, char *str)
 {
@@ -114,8 +103,6 @@ mvwinnstr(WINDOW *win, int y, int x, char *str, int n)
  *	Return a string of characters at cursor position.
  *	XXX: should be multi-byte characters for SUSv2.
  */
-__warn_references(winstr,
-    "warning: this program uses winstr(), which is unsafe.")
 int
 winstr(WINDOW *win, char *str)
 {
