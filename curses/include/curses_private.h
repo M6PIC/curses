@@ -86,11 +86,6 @@ struct __ldata {
 #define __LDATASIZE	(sizeof(__LDATA))
 
 struct __line {
-#ifdef DEBUG
-#define SENTINEL_VALUE 0xaac0ffee
-
-	unsigned int sentinel;          /* try to catch line overflows */
-#endif
 #define	__ISDIRTY	0x01		/* Line is dirty. */
 #define __ISPASTEOL	0x02		/* Cursor is past end of line */
 #define __ISFORCED	0x04		/* Force update, no optimisation */
@@ -252,26 +247,6 @@ extern char	 __UPPERCASE;		/* Terminal is uppercase only. */
 extern int	 My_term;		/* Use Def_term regardless. */
 extern const char	*Def_term;	/* Default terminal type. */
 extern SCREEN   *_cursesi_screen;       /* The current screen in use */
-
-/* Debugging options/functions. */
-#ifdef DEBUG
-#define __CTRACE_TSTAMP		0x00000001
-#define __CTRACE_MISC		0x00000002
-#define __CTRACE_INIT		0x00000004
-#define __CTRACE_SCREEN		0x00000008
-#define __CTRACE_WINDOW		0x00000010
-#define __CTRACE_REFRESH	0x00000020
-#define __CTRACE_COLOR		0x00000040
-#define __CTRACE_INPUT		0x00000080
-#define __CTRACE_OUTPUT		0x00000100
-#define __CTRACE_LINE		0x00000200
-#define __CTRACE_ATTR		0x00000400
-#define __CTRACE_ERASE		0x00000800
-#define __CTRACE_FILEIO		0x00001000
-#define __CTRACE_ALL		0x7fffffff
-void	 __CTRACE_init(void);
-void	 __CTRACE(int, const char *, ...) __attribute__((__format__(__printf__, 2, 3)));
-#endif
 
 /* Private functions. */
 int     __cputchar_args(int, void *);

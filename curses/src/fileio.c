@@ -74,10 +74,6 @@ putwin(WINDOW *win, FILE *fp)
 	int y, x;
 	__LDATA *sp;
 
-#ifdef DEBUG
-	__CTRACE(__CTRACE_FILEIO, "putwin: win %p\n", win);
-#endif
-
 	if (win == NULL)
 		return ERR;
 
@@ -161,10 +157,6 @@ getwin(FILE *fp)
 	int y, x;
 	__LDATA *sp;
 
-#ifdef DEBUG
-	__CTRACE(__CTRACE_FILEIO, "getwin\n");
-#endif
-
 	/* Check library version */
 	if (fread(&major, sizeof(int), 1, fp) != 1)
 		return NULL;
@@ -216,9 +208,6 @@ getwin(FILE *fp)
 		}
 		__touchline(win, y, 0, (int) win->maxx - 1);
 	}
-#ifdef DEBUG
-	__CTRACE(__CTRACE_FILEIO, "getwin: win = 0x%p\n", win);
-#endif
 	return win;
 
 error1:

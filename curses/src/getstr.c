@@ -155,11 +155,6 @@ __wgetnstr(WINDOW *win, char *str, int n)
 	remain = n - 1;
 
 	while ((c = wgetch(win)) != ERR && c != '\n' && c != '\r') {
-#ifdef DEBUG
-		__CTRACE(__CTRACE_INPUT,
-		    "__wgetnstr: win %p, char 0x%x, remain %d\n",
-		    win, c, remain);
-#endif
 		*str = c;
 		__touchline(win, win->cury, 0, (int) win->maxx - 1);
 		if (c == ec || c == KEY_BACKSPACE || c == KEY_LEFT) {

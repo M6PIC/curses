@@ -83,11 +83,6 @@ set_term(SCREEN *new)
 	_cursesi_reset_acs(new);
     _cursesi_reset_wacs(new);
 
-#ifdef DEBUG
-	__CTRACE(__CTRACE_SCREEN, "set_term: LINES = %d, COLS = %d\n",
-	    LINES, COLS);
-#endif
-
 	return old_screen;
 }
 
@@ -108,10 +103,6 @@ newterm(char *type, FILE *outfd, FILE *infd)
 
 	if ((new_screen = calloc(1, sizeof(SCREEN))) == NULL)
 		return NULL;
-
-#ifdef DEBUG
-	__CTRACE(__CTRACE_INIT, "newterm\n");
-#endif
 
 	new_screen->infd = infd;
 	new_screen->outfd = outfd;
@@ -185,10 +176,6 @@ newterm(char *type, FILE *outfd, FILE *infd)
 		set_term(new_screen);
 	}
 
-#ifdef DEBUG
-	__CTRACE(__CTRACE_SCREEN, "newterm: LINES = %d, COLS = %d\n",
-	    LINES, COLS);
-#endif
 	__startwin(new_screen);
 
 	return new_screen;
@@ -212,9 +199,6 @@ delscreen(SCREEN *screen)
 {
         struct __winlist *list;
 
-#ifdef DEBUG
-	__CTRACE(__CTRACE_SCREEN, "delscreen(%p)\n", screen);
-#endif
 	  /* free up the terminfo stuff */
 	del_curterm(screen->term);
 

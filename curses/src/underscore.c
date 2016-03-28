@@ -68,9 +68,6 @@ wunderscore(WINDOW *win)
 	if ((enter_underline_mode != NULL && exit_underline_mode != NULL) ||
 	    underline_char != NULL)
 	{
-#ifdef DEBUG
-		__CTRACE(__CTRACE_ATTR, "wunderscore\n");
-#endif
 		win->wattr |= __UNDERSCORE;
 	}
 	return (1);
@@ -84,9 +81,6 @@ int
 wunderend(WINDOW *win)
 {
 	if (exit_underline_mode != NULL) {
-#ifdef DEBUG
-		__CTRACE(__CTRACE_ATTR, "wunderend\n");
-#endif
 		win->wattr &= ~__UNDERSCORE;
 	}
         return 1;

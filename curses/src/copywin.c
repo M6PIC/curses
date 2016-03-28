@@ -87,13 +87,6 @@ int copywin(const WINDOW *srcwin, WINDOW *dstwin,
 	if (sminrow + (dmaxrow - dminrow) >= srcwin->maxy)
 		dmaxrow = srcwin->maxy + dminrow - sminrow - 1;
 
-#ifdef DEBUG
-	__CTRACE(__CTRACE_WINDOW,
-	    "copywin %s mode: from (%d,%d) to (%d,%d-%d,%d)\n",
-	    dooverlay ? "overlay" : "overwrite",
-	    sminrow, smincol, dminrow, dmincol, dmaxrow, dmaxcol);
-#endif
-
 	for (; dminrow <= dmaxrow; sminrow++, dminrow++) {
 		sp = &srcwin->alines[sminrow]->line[smincol];
 		end = sp + dmaxcol - dmincol;

@@ -45,9 +45,6 @@ napms(int ms)
 {
 	struct timespec	ts;
 
-#ifdef DEBUG
-	__CTRACE(__CTRACE_MISC, "napms: %d\n", ms);
-#endif
 	ts.tv_sec = ms / 1000;
 	ts.tv_nsec = (ms % 1000) * 1000000;
 	(void) nanosleep(&ts, NULL);
@@ -63,9 +60,6 @@ delay_output(int ms)
 {
 	char *delstr;
 
-#ifdef DEBUG
-	__CTRACE(__CTRACE_MISC, "delay_output: %d\n", ms);
-#endif
 	if (!_cursesi_screen->padchar)
 		return(napms(ms));
 

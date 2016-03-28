@@ -137,10 +137,6 @@ wadd_wchnstr(WINDOW *win, const cchar_t *wchstr, int n)
 	nschar_t *np, *tnp;
 	__LINE *lnp;
 
-#ifdef DEBUG
-	__CTRACE(__CTRACE_INPUT,
-	    "wadd_wchnstr: win = %p, wchstr = %p, n = %d\n", win, wchstr, n);
-#endif
 
 	if (!wchstr)
 		return OK;
@@ -153,9 +149,6 @@ wadd_wchnstr(WINDOW *win, const cchar_t *wchstr, int n)
 			n--, chp++, ++cnt);
 	else
 		for (chp = wchstr, cnt = 0; chp->vals[0]; chp++, ++cnt);
-#ifdef DEBUG
-	__CTRACE(__CTRACE_INPUT, "wadd_wchnstr: len=%d\n", cnt);
-#endif /* DEBUG */
 	chp = wchstr;
 	x = win->curx;
 	y = win->cury;
@@ -193,18 +186,11 @@ wadd_wchnstr(WINDOW *win, const cchar_t *wchstr, int n)
 	while (cnt) {
 		x = ex;
 		wc = chp->vals[0];
-#ifdef DEBUG
-		__CTRACE(__CTRACE_INPUT, "wadd_wchnstr: adding %x", wc);
-#endif /* DEBUG */
 		cw = wcwidth(wc);
 		if (cw < 0)
 			cw = 1;
 		if (cw) {
 			/* spacing character */
-#ifdef DEBUG
-			__CTRACE(__CTRACE_INPUT,
-			    " as a spacing char(width=%d)\n", cw);
-#endif /* DEBUG */
 			if (cw > win->maxx - ex) {
 				/* clear to EOL */
 				while (ex < win->maxx) {
@@ -246,11 +232,6 @@ wadd_wchnstr(WINDOW *win, const cchar_t *wchstr, int n)
 				}
 			}
 			lp++, ex++;
-#ifdef DEBUG
-			__CTRACE(__CTRACE_INPUT,
-				"wadd_wchnstr: ex = %d, x = %d, cw = %d\n",
-				 ex, x, cw);
-#endif /* DEBUG */
 			while (ex - x <= cw - 1) {
 				np = lp->nsp;
 				if (np) {
@@ -268,10 +249,6 @@ wadd_wchnstr(WINDOW *win, const cchar_t *wchstr, int n)
 			}
 		} else {
 			/* non-spacing character */
-#ifdef DEBUG
-			__CTRACE(__CTRACE_INPUT,
-				"wadd_wchnstr: as non-spacing char");
-#endif /* DEBUG */
 			for (i = 0; i < chp->elements; i++) {
 				np = (nschar_t *)malloc(sizeof(nschar_t));
 				if (!np)
@@ -283,14 +260,6 @@ wadd_wchnstr(WINDOW *win, const cchar_t *wchstr, int n)
 		}
 		cnt--, chp++;
 	}
-#ifdef DEBUG
-	for (i = sx; i < ex; i++) {
-		__CTRACE(__CTRACE_INPUT, "wadd_wchnstr: (%d,%d)=(%x,%x,%p)\n",
-		    win->cury, i, win->alines[win->cury]->line[i].ch,
-		    win->alines[win->cury]->line[i].attr,
-		    win->alines[win->cury]->line[i].nsp);
-	}
-#endif /* DEBUG */
 	lnp->flags |= __ISDIRTY;
 	newx = ex + win->ch_off;
 	if (newx > *lnp->lastchp)

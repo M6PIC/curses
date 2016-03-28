@@ -44,10 +44,6 @@ initscr(void)
 {
 	const char *sp;
 
-#ifdef DEBUG
-	__CTRACE(__CTRACE_INIT, "initscr\n");
-#endif
-
 	/*
 	 * If My_term is set, or can't find a terminal in the environment,
 	 * use Def_term.

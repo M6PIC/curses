@@ -60,9 +60,6 @@ werase(WINDOW *win)
 	__LDATA *sp, *end, *start;
 	attr_t	attr;
 
-#ifdef DEBUG
-	__CTRACE(__CTRACE_ERASE, "werase: (%p)\n", win);
-#endif
 	if (win != curscr)
 		attr = win->battr & __ATTRIBUTES;
 	else

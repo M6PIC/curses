@@ -53,9 +53,6 @@ int
 wmove(WINDOW *win, int y, int x)
 {
 
-#ifdef DEBUG
-	__CTRACE(__CTRACE_MISC, "wmove: (%d, %d)\n", y, x);
-#endif
 	if (x < 0 || y < 0)
 		return (ERR);
 	if (x >= win->maxx || y >= win->maxy)

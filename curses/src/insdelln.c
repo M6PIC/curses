@@ -67,11 +67,6 @@ winsdelln(WINDOW *win, int nlines)
 	__LDATA *lp;
 	attr_t	attr;
 
-#ifdef DEBUG
-	__CTRACE(__CTRACE_LINE,
-	    "winsdelln: (%p) cury=%d lines=%d\n", win, win->cury, nlines);
-#endif
-
 	if (!nlines)
 		return(OK);
 

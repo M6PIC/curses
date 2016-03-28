@@ -41,18 +41,12 @@ meta(/*ARGSUSED*/ WINDOW *win, bool bf)
 {
 	if (bf == TRUE) {
 		if (meta_on != NULL) {
-#ifdef DEBUG
-			__CTRACE(__CTRACE_MISC, "meta: TRUE\n");
-#endif
 			tputs(meta_on, 0, __cputchar);
 			_cursesi_screen->meta_state = TRUE;
 			fflush(_cursesi_screen->outfd);
 		}
 	} else {
 		if (meta_off != NULL) {
-#ifdef DEBUG
-			__CTRACE(__CTRACE_MISC, "meta: FALSE\n");
-#endif
 			tputs(meta_off, 0, __cputchar);
 			_cursesi_screen->meta_state = FALSE;
 			fflush(_cursesi_screen->outfd);

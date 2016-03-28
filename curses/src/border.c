@@ -134,25 +134,6 @@ int wborder_set(WINDOW *win, const cchar_t *ls, const cchar_t *rs,
 	else
 		memcpy( &botright, WACS_LRCORNER, sizeof( cchar_t ));
 
-#ifdef DEBUG
-	__CTRACE(__CTRACE_INPUT, "wborder_set: left = %c, 0x%x\n",
-	    left.vals[0], left.attributes );
-	__CTRACE(__CTRACE_INPUT, "wborder_set: right = %c, 0x%x\n",
-	    right.vals[0], right.attributes );
-	__CTRACE(__CTRACE_INPUT, "wborder_set: top = %c, 0x%x\n",
-	    top.vals[0], top.attributes );
-	__CTRACE(__CTRACE_INPUT, "wborder_set: bottom = %c, 0x%x\n",
-	    bottom.vals[0], bottom.attributes );
-	__CTRACE(__CTRACE_INPUT, "wborder_set: topleft = %c, 0x%x\n",
-	    topleft.vals[0], topleft.attributes );
-	__CTRACE(__CTRACE_INPUT, "wborder_set: topright = %c, 0x%x\n",
-	    topright.vals[0], topright.attributes );
-	__CTRACE(__CTRACE_INPUT, "wborder_set: botleft = %c, 0x%x\n",
-	    botleft.vals[0], botleft.attributes );
-	__CTRACE(__CTRACE_INPUT, "wborder_set: botright = %c, 0x%x\n",
-	    botright.vals[0], botright.attributes );
-#endif
-
 	/* Merge window attributes */
 	left.attributes |= (left.attributes & __COLOR) ?
 		(win->wattr & ~__COLOR) : win->wattr;
@@ -226,10 +207,6 @@ int wborder_set(WINDOW *win, const cchar_t *ls, const cchar_t *rs,
 			}
 		}
 		for ( j = cw; WCOL( win->alines[i]->line[j]) < 0; j++ ) {
-#ifdef DEBUG
-			__CTRACE(__CTRACE_INPUT,
-			    "wborder_set: clean out partial char[%d]", j);
-#endif /* DEBUG */
 			win->alines[i]->line[j].ch = ( wchar_t )btowc(win->bch);
 			if (_cursesi_copy_nsp(win->bnsp,
 					      &win->alines[i]->line[j]) == ERR)
@@ -271,11 +248,6 @@ int wborder_set(WINDOW *win, const cchar_t *ls, const cchar_t *rs,
 					endx - cw + 1 - j );
 		}
 		if ( pcw != 1 ) {
-#ifdef DEBUG
-			__CTRACE(__CTRACE_INPUT,
-			    "wborder_set: clean out partial chars[%d:%d]",
-			    endx - cw + pcw, endx - cw );
-#endif /* DEBUG */
 			k = pcw < 0 ? endx -cw + pcw : endx - cw;
 			for ( j = endx - cw; j >= k; j-- ) {
 				win->alines[i]->line[j].ch

@@ -56,10 +56,6 @@ wresize(WINDOW *win, int req_nlines, int req_ncols)
 	if (win == NULL)
 		return ERR;
 
-#ifdef	DEBUG
-	__CTRACE(__CTRACE_WINDOW, "wresize: (%p, %d, %d)\n",
-	    win, nlines, ncols);
-#endif
 	if (win->orig == NULL) {
 		/* bound "our" windows by the screen size */
 		if (win == curscr || win == __virtscr || win == stdscr) {
@@ -136,10 +132,6 @@ resizeterm(int nlines, int ncols)
 	WINDOW *win;
 	struct __winlist *list;
 
-#ifdef	DEBUG
-	__CTRACE(__CTRACE_WINDOW, "resizeterm: (%d, %d)\n", nlines, ncols);
-#endif
-
 	if (__resizeterm(curscr, nlines, ncols) == ERR)
 		return ERR;
 	if (__resizeterm(__virtscr, nlines, ncols) == ERR)
@@ -200,18 +192,6 @@ __resizewin(WINDOW *win, int nlines, int ncols)
 	int			 y, x;
 	WINDOW			*swin;
 
-#ifdef	DEBUG
-	__CTRACE(__CTRACE_WINDOW, "resize: (%p, %d, %d)\n", win, nlines, ncols);
-	__CTRACE(__CTRACE_WINDOW, "resize: win->wattr = %08x\n", win->wattr);
-	__CTRACE(__CTRACE_WINDOW, "resize: win->flags = %#.4x\n", win->flags);
-	__CTRACE(__CTRACE_WINDOW, "resize: win->maxy = %d\n", win->maxy);
-	__CTRACE(__CTRACE_WINDOW, "resize: win->maxx = %d\n", win->maxx);
-	__CTRACE(__CTRACE_WINDOW, "resize: win->begy = %d\n", win->begy);
-	__CTRACE(__CTRACE_WINDOW, "resize: win->begx = %d\n", win->begx);
-	__CTRACE(__CTRACE_WINDOW, "resize: win->scr_t = %d\n", win->scr_t);
-	__CTRACE(__CTRACE_WINDOW, "resize: win->scr_b = %d\n", win->scr_b);
-#endif
-
 	/*
 	 * free up any non-spacing storage before we lose the
 	 * pointers...
@@ -253,9 +233,6 @@ __resizewin(WINDOW *win, int nlines, int ncols)
 		for (lp = win->lspace, i = 0; i < nlines; i++, lp++) {
 			win->alines[i] = lp;
 			lp->line = &win->wspace[i * ncols];
-#ifdef DEBUG
-			lp->sentinel = SENTINEL_VALUE;
-#endif
 			lp->firstchp = &lp->firstch;
 			lp->lastchp = &lp->lastch;
 			lp->firstch = 0;
@@ -270,9 +247,6 @@ __resizewin(WINDOW *win, int nlines, int ncols)
 			win->alines[i] = lp;
 			olp = win->orig->alines[i + win->begy - win->orig->begy];
 			lp->line = &olp->line[win->ch_off];
-#ifdef DEBUG
-			lp->sentinel = SENTINEL_VALUE;
-#endif
 			lp->firstchp = &olp->firstch;
 			lp->lastchp = &olp->lastch;
 			lp->flags = __ISDIRTY;
@@ -305,17 +279,6 @@ __resizewin(WINDOW *win, int nlines, int ncols)
 		lp->hash = __hash((char *)(void *)lp->line,
 				  (size_t) (ncols * __LDATASIZE));
 	}
-
-#ifdef DEBUG
-	__CTRACE(__CTRACE_WINDOW, "resize: win->wattr = %08x\n", win->wattr);
-	__CTRACE(__CTRACE_WINDOW, "resize: win->flags = %#.4x\n", win->flags);
-	__CTRACE(__CTRACE_WINDOW, "resize: win->maxy = %d\n", win->maxy);
-	__CTRACE(__CTRACE_WINDOW, "resize: win->maxx = %d\n", win->maxx);
-	__CTRACE(__CTRACE_WINDOW, "resize: win->begy = %d\n", win->begy);
-	__CTRACE(__CTRACE_WINDOW, "resize: win->begx = %d\n", win->begx);
-	__CTRACE(__CTRACE_WINDOW, "resize: win->scr_t = %d\n", win->scr_t);
-	__CTRACE(__CTRACE_WINDOW, "resize: win->scr_b = %d\n", win->scr_b);
-#endif
 
 	if (win->orig == NULL) {
 		/* bound subwindows to new size and fixup their pointers */

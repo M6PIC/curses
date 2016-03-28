@@ -97,9 +97,6 @@ __stop_signal_handler(/*ARGSUSED*/int signo)
 void
 __set_stophandler(void)
 {
-#ifdef DEBUG
-	__CTRACE(__CTRACE_MISC, "__set_stophandler: %d\n", tstp_set);
-#endif
 	if (!tstp_set) {
 		otstpfn = signal(SIGTSTP, __stop_signal_handler);
 		tstp_set = 1;
@@ -112,9 +109,6 @@ __set_stophandler(void)
 void
 __restore_stophandler(void)
 {
-#ifdef DEBUG
-	__CTRACE(__CTRACE_MISC, "__restore_stophandler: %d\n", tstp_set);
-#endif
 	if (tstp_set) {
 		(void) signal(SIGTSTP, otstpfn);
 		tstp_set = 0;
@@ -151,9 +145,6 @@ __winch_signal_handler(/*ARGSUSED*/int signo)
 void
 __set_winchhandler(void)
 {
-#ifdef DEBUG
-	__CTRACE(__CTRACE_MISC, "__set_winchhandler: %d\n", winch_set);
-#endif
 	if (!winch_set) {
 		struct sigaction sa;
 
@@ -162,11 +153,6 @@ __set_winchhandler(void)
 		sigemptyset(&sa.sa_mask);
 		sigaction(SIGWINCH, &sa, &owsa);
 		winch_set = 1;
-#ifdef DEBUG
-		__CTRACE(__CTRACE_MISC,
-		    "__set_winchhandler: owsa.sa_handler=%p\n",
-		    owsa.sa_handler);
-#endif
 	}
 }
 
@@ -176,9 +162,6 @@ __set_winchhandler(void)
 void
 __restore_winchhandler(void)
 {
-#ifdef DEBUG
-	__CTRACE(__CTRACE_MISC, "__restore_winchhandler: %d\n", winch_set);
-#endif
 	if (winch_set > 0) {
 		struct sigaction cwsa;
 
@@ -192,10 +175,6 @@ __restore_winchhandler(void)
 			 * so don't restore the previous one.
 			 */
 			winch_set = -1;
-#ifdef DEBUG
-			__CTRACE(__CTRACE_MISC, "cwsa.sa_handler = %p\n",
-			    cwsa.sa_handler);
-#endif
 		}
 	}
 }
@@ -206,9 +185,6 @@ __restore_winchhandler(void)
 int
 __stopwin(void)
 {
-#ifdef DEBUG
-	__CTRACE(__CTRACE_MISC, "__stopwin\n");
-#endif
 	if (_cursesi_screen->endwin)
 		return OK;
 
@@ -248,9 +224,6 @@ __restartwin(void)
 	struct winsize win;
 	int nlines, ncols;
 
-#ifdef DEBUG
-	__CTRACE(__CTRACE_MISC, "__restartwin\n");
-#endif
 	if (!_cursesi_screen->endwin)
 		return;
 

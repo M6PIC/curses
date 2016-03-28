@@ -40,14 +40,8 @@ int
 beep(void)
 {
 	if (bell != NULL) {
-#ifdef DEBUG
-		__CTRACE(__CTRACE_MISC, "beep: bl\n");
-#endif
 		tputs(bell, 0, __cputchar);
 	} else if (flash_screen != NULL) {
-#ifdef DEBUG
-		__CTRACE(__CTRACE_MISC, "beep: vb\n");
-#endif
 		tputs(flash_screen, 0, __cputchar);
 	}
 	return (1);
@@ -61,14 +55,8 @@ int
 flash(void)
 {
 	if (flash_screen != NULL) {
-#ifdef DEBUG
-		__CTRACE(__CTRACE_MISC, "flash: vb\n");
-#endif
 		tputs(flash_screen, 0, __cputchar);
 	} else if (bell != NULL) {
-#ifdef DEBUG
-		__CTRACE(__CTRACE_MISC, "flash: bl\n");
-#endif
 		tputs(bell, 0, __cputchar);
 	}
 	return (1);

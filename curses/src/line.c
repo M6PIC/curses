@@ -172,19 +172,12 @@ int whline_set(WINDOW *win, const cchar_t *wch, int n)
 	if ( ( win->maxx - win->curx ) < cw )
 		return ERR;
 	wcn = min( n, ( win->maxx - win->curx ) / cw );
-#ifdef DEBUG
-	__CTRACE(__CTRACE_LINE, "whline_set: line of %d\n", wcn);
-#endif /* DEBUG */
 	ocurx = win->curx;
 
 	memcpy( &cc, wch, sizeof( cchar_t ));
 	if (!(wch->vals[ 0 ]))
 		cc.vals[ 0 ] |= WACS_HLINE->vals[0];
 	for (i = 0; i < wcn; i++ ) {
-#ifdef DEBUG
-		__CTRACE(__CTRACE_LINE, "whline_set: (%d,%d)\n",
-		   win->cury, ocurx + i * cw);
-#endif /* DEBUG */
 		mvwadd_wch(win, win->cury, ocurx + i * cw, &cc);
 	}
 		
@@ -216,9 +209,6 @@ int wvline_set(WINDOW *win, const cchar_t *wch, int n)
 	cchar_t cc;
 
 	wcn = min( n, win->maxy - win->cury);
-#ifdef DEBUG
-	__CTRACE(__CTRACE_LINE, "wvline_set: line of %d\n", wcn);
-#endif /* DEBUG */
 	ocury = win->cury;
 	ocurx = win->curx;
 
@@ -227,10 +217,6 @@ int wvline_set(WINDOW *win, const cchar_t *wch, int n)
 		cc.vals[ 0 ] |= WACS_VLINE->vals[0];
 	for (i = 0; i < wcn; i++) {
 		mvwadd_wch(win, ocury + i, ocurx, &cc);
-#ifdef DEBUG
-		__CTRACE(__CTRACE_LINE, "wvline_set: (%d,%d)\n",
-		    ocury + i, ocurx);
-#endif /* DEBUG */
 	}
 	wmove(win, ocury, ocurx);
 	return OK;

@@ -117,9 +117,6 @@ __winwrite(cookie, buf, n)
 
 	for (c = n, win = cookie; --c >= 0;)
 	{
-#ifdef DEBUG
-		__CTRACE(__CTRACE_MISC, "__winwrite: %c\n", *buf);
-#endif
 		if (waddch(win, (chtype) (*buf++ & __CHARTEXT)) == ERR)
 			return (-1);
 	}

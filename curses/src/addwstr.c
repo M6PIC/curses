@@ -141,9 +141,6 @@ waddnwstr(WINDOW *win, const wchar_t *s, int n)
 		for (p = s, len = 0; n-- && *p++; ++len );
 	else
 		len = wcslen(s);
-#ifdef DEBUG
-	__CTRACE(__CTRACE_INPUT, "waddnwstr: string len=%ld\n", (long) len);
-#endif /* DEBUG */
 
 	p = s;
 	while ( len ) {
@@ -153,10 +150,6 @@ waddnwstr(WINDOW *win, const wchar_t *s, int n)
 			return ERR;
 		if ( wadd_wch( win, &cc ) == ERR )
 			return ERR;
-#ifdef DEBUG
-		__CTRACE(__CTRACE_INPUT, "waddnwstr: (%x,%x,%d) added\n", 
-				cc.vals[ 0 ], cc.attributes, cc.elements );
-#endif /* DEBUG */
 		p++, len--;
 	}
 

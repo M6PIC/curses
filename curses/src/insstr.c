@@ -141,16 +141,10 @@ winsnstr(WINDOW *win, const char *str, int n)
 		for ( scp = str, len = 0; n-- && *scp++; ++len );
 	else
 		for ( scp = str, len = 0; *scp++; ++len );
-#ifdef DEBUG
-	__CTRACE(__CTRACE_INPUT, "winsnstr: len = %d\n", len);
-#endif /* DEBUG */
 
 	/* move string */
 	end = &win->alines[win->cury]->line[win->curx];
 	if ( len < win->maxx - win->curx ) {
-#ifdef DEBUG
-		__CTRACE(__CTRACE_INPUT, "winsnstr: shift %d cells\n", len);
-#endif /* DEBUG */
 		temp1 = &win->alines[win->cury]->line[win->maxx - 1];
 		temp2 = temp1 - len;
 		while (temp2 >= end) {
@@ -175,18 +169,6 @@ winsnstr(WINDOW *win, const char *str, int n)
 		temp1->attr = win->wattr;
 		SET_WCOL( *temp1, 1 );
 	}
-#ifdef DEBUG
-	{
-		int i;
-
-		for ( i = win->curx; i < win->curx + len; i++ ) {
-			__CTRACE(__CTRACE_INPUT,
-			    "winsnstr: (%d,%d)=('%c',%x)\n", win->cury, i,
-			    win->alines[win->cury]->line[i].ch,
-			    win->alines[win->cury]->line[i].attr);
-		}
-	}
-#endif /* DEBUG */
 	lnp = win->alines[ win->cury ];
 	lnp->flags |= __ISDIRTY;
 	if ( win->ch_off < *lnp->firstchp )

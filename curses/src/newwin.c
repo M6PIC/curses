@@ -134,10 +134,6 @@ __newwin(SCREEN *screen, int nlines, int ncols, int by, int bx, int ispad)
 	win->reqy = nlines;
 	win->reqx = ncols;
 
-#ifdef DEBUG
-	__CTRACE(__CTRACE_WINDOW, "newwin: win->ch_off = %d\n", win->ch_off);
-#endif
-
 	for (i = 0; i < maxy; i++) {
 		lp = win->alines[i];
 		if (ispad)
@@ -171,10 +167,6 @@ __subwin(WINDOW *orig, int nlines, int ncols, int by, int bx, int ispad)
 	WINDOW *win;
 	int	maxy, maxx;
 
-#ifdef	DEBUG
-	__CTRACE(__CTRACE_WINDOW, "subwin: (%p, %d, %d, %d, %d, %d)\n",
-	    orig, nlines, ncols, by, bx, ispad);
-#endif
 	if (orig == NULL || orig->orig != NULL)
 		return NULL;
 
@@ -219,9 +211,6 @@ __set_subwin(WINDOW *orig, WINDOW *win)
 	for (lp = win->lspace, i = 0; i < win->maxy; i++, lp++) {
 		win->alines[i] = lp;
 		olp = orig->alines[i + win->begy - orig->begy];
-#ifdef DEBUG
-		lp->sentinel = SENTINEL_VALUE;
-#endif
 		lp->line = &olp->line[win->ch_off];
 		lp->firstchp = &olp->firstch;
 		lp->lastchp = &olp->lastch;
@@ -240,12 +229,8 @@ __set_subwin(WINDOW *orig, WINDOW *win)
 			}
 		}
 	}
-
-#ifdef DEBUG
-	__CTRACE(__CTRACE_WINDOW, "__set_subwin: win->ch_off = %d\n",
-	    win->ch_off);
-#endif
 }
+
 /*
  * __makenew --
  *	Set up a window buffer and returns a pointer to it.
@@ -260,18 +245,11 @@ __makenew(SCREEN *screen, int nlines, int ncols, int by, int bx, int sub,
 	int			 i;
 
 
-#ifdef	DEBUG
-	__CTRACE(__CTRACE_WINDOW, "makenew: (%d, %d, %d, %d)\n",
-	    nlines, ncols, by, bx);
-#endif
 	if (nlines <= 0 || ncols <= 0)
 		return NULL;
 
 	if ((win = malloc(sizeof(WINDOW))) == NULL)
 		return (NULL);
-#ifdef DEBUG
-	__CTRACE(__CTRACE_WINDOW, "makenew: win = %p\n", win);
-#endif
 
 	/* Set up line pointer array and line space. */
 	if ((win->alines = malloc(nlines * sizeof(__LINE *))) == NULL) {
@@ -324,9 +302,6 @@ __makenew(SCREEN *screen, int nlines, int ncols, int by, int bx, int sub,
 		for (lp = win->lspace, i = 0; i < nlines; i++, lp++) {
 			win->alines[i] = lp;
 			lp->line = &win->wspace[i * ncols];
-#ifdef DEBUG
-			lp->sentinel = SENTINEL_VALUE;
-#endif
 			lp->firstchp = &lp->firstch;
 			lp->lastchp = &lp->lastch;
 			if (ispad) {
@@ -338,9 +313,6 @@ __makenew(SCREEN *screen, int nlines, int ncols, int by, int bx, int sub,
 			}
 		}
 	}
-#ifdef DEBUG
-	__CTRACE(__CTRACE_WINDOW, "makenew: ncols = %d\n", ncols);
-#endif
 	win->screen = screen;
 	win->cury = win->curx = 0;
 	win->maxy = nlines;
@@ -367,16 +339,6 @@ __makenew(SCREEN *screen, int nlines, int ncols, int by, int bx, int sub,
 		win->smaxx = 0;
 	} else
 		__swflags(win);
-#ifdef DEBUG
-	__CTRACE(__CTRACE_WINDOW, "makenew: win->wattr = %08x\n", win->wattr);
-	__CTRACE(__CTRACE_WINDOW, "makenew: win->flags = %#.4x\n", win->flags);
-	__CTRACE(__CTRACE_WINDOW, "makenew: win->maxy = %d\n", win->maxy);
-	__CTRACE(__CTRACE_WINDOW, "makenew: win->maxx = %d\n", win->maxx);
-	__CTRACE(__CTRACE_WINDOW, "makenew: win->begy = %d\n", win->begy);
-	__CTRACE(__CTRACE_WINDOW, "makenew: win->begx = %d\n", win->begx);
-	__CTRACE(__CTRACE_WINDOW, "makenew: win->scr_t = %d\n", win->scr_t);
-	__CTRACE(__CTRACE_WINDOW, "makenew: win->scr_b = %d\n", win->scr_b);
-#endif
 	return (win);
 }
 

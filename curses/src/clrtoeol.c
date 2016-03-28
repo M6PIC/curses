@@ -90,12 +90,6 @@ wclrtoeol(WINDOW *win)
 				return ERR;
 			SET_WCOL( *sp, 1 );
 		}
-#ifdef DEBUG
-	__CTRACE(__CTRACE_ERASE, "CLRTOEOL: y = %d, minx = %d, maxx = %d, "
-	    "firstch = %d, lastch = %d\n",
-	    y, minx, (int) (maxx - win->alines[y]->line),
-	    *win->alines[y]->firstchp, *win->alines[y]->lastchp);
-#endif
 	/* Update firstch and lastch for the line. */
 	return (__touchline(win, y, x, (int) win->maxx - 1));
 }

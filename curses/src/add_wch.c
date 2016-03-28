@@ -37,9 +37,6 @@
 #include <stdlib.h>
 #include "curses.h"
 #include "curses_private.h"
-#ifdef DEBUG
-#include <assert.h>
-#endif
 
 /*
  * add_wch --
@@ -90,14 +87,6 @@ wadd_wch(WINDOW *win, const cchar_t *wch)
 	int x = win->curx, y = win->cury;
 	__LINE *lnp = NULL;
 
-#ifdef DEBUG
-	int i;
-
-	for (i = 0; i < win->maxy; i++) {
-		assert(win->alines[i]->sentinel == SENTINEL_VALUE);
-	}
-	__CTRACE(__CTRACE_INPUT, "wadd_wch: win(%p)\n", win);
-#endif
 	lnp = win->alines[y];
 	return _cursesi_addwchar(win, &lnp, &y, &x, wch, 1);
 }

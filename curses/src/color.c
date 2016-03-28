@@ -134,25 +134,6 @@ start_color(void)
 	else
 		return(ERR);		/* Unsupported colour method */
 
-#ifdef DEBUG
-	__CTRACE(__CTRACE_COLOR, "start_color: COLORS = %d, COLOR_PAIRS = %d",
-	    COLORS, COLOR_PAIRS);
-	switch (_cursesi_screen->color_type) {
-	case COLOR_ANSI:
-		__CTRACE(__CTRACE_COLOR, " (ANSI style)\n");
-		break;
-	case COLOR_HP:
-		__CTRACE(__CTRACE_COLOR, " (HP style)\n");
-		break;
-	case COLOR_TEK:
-		__CTRACE(__CTRACE_COLOR, " (Tektronics style)\n");
-		break;
-	case COLOR_OTHER:
-		__CTRACE(__CTRACE_COLOR, " (Other style)\n");
-		break;
-	}
-#endif
-
 	/*
 	 * Attributes that cannot be used with color.
 	 * Store these in an attr_t for wattrset()/wattron().
@@ -179,10 +160,6 @@ start_color(void)
 		if (temp_nc & 0x0100)
 			_cursesi_screen->nca |= __ALTCHARSET;
 	}
-#ifdef DEBUG
-	__CTRACE(__CTRACE_COLOR, "start_color: _cursesi_screen->nca = %08x\n",
-	    _cursesi_screen->nca);
-#endif
 
 	/* Set up initial 8 colours */
 	if (COLORS >= COLOR_BLACK)
@@ -262,10 +239,6 @@ int
 init_pair(short pair, short fore, short back)
 {
 	int	changed;
-
-#ifdef DEBUG
-	__CTRACE(__CTRACE_COLOR, "init_pair: %d, %d, %d\n", pair, fore, back);
-#endif
 
 	if (pair < 0 || pair >= COLOR_PAIRS)
 		return (ERR);
@@ -382,10 +355,6 @@ pair_content(short pair, short *forep, short *backp)
 int
 init_color(short color, short red, short green, short blue)
 {
-#ifdef DEBUG
-	__CTRACE(__CTRACE_COLOR, "init_color: %d, %d, %d, %d\n",
-	    color, red, green, blue);
-#endif
 	if (color < 0 || color >= _cursesi_screen->COLORS)
 		return(ERR);
 
@@ -420,10 +389,6 @@ color_content(short color, short *redp, short *greenp, short *bluep)
 int
 use_default_colors()
 {
-#ifdef DEBUG
-	__CTRACE(__CTRACE_COLOR, "use_default_colors\n");
-#endif
-
 	return(assume_default_colors(-1, -1));
 }
 
@@ -434,12 +399,6 @@ use_default_colors()
 int
 assume_default_colors(short fore, short back)
 {
-#ifdef DEBUG
-	__CTRACE(__CTRACE_COLOR, "assume_default_colors: %d, %d\n",
-	    fore, back);
-	__CTRACE(__CTRACE_COLOR, "assume_default_colors: default_colour = %d, pair_number = %d\n", __default_color, PAIR_NUMBER(__default_color));
-#endif
-
 	/* Swap red/blue and yellow/cyan */
 	if (_cursesi_screen->color_type == COLOR_OTHER) {
 		switch (fore) {
@@ -519,11 +478,6 @@ __set_color( /*ARGSUSED*/ WINDOW *win, attr_t attr)
 		return;
 
 	pair = PAIR_NUMBER((u_int32_t)attr);
-#ifdef DEBUG
-	__CTRACE(__CTRACE_COLOR, "__set_color: %d, %d, %d\n", pair,
-		 _cursesi_screen->colour_pairs[pair].fore,
-		 _cursesi_screen->colour_pairs[pair].back);
-#endif
 	switch (_cursesi_screen->color_type) {
 	/* Set ANSI forground and background colours */
 	case COLOR_ANSI:
@@ -570,9 +524,6 @@ __set_color( /*ARGSUSED*/ WINDOW *win, attr_t attr)
 void
 __unset_color(WINDOW *win)
 {
-#ifdef DEBUG
-	__CTRACE(__CTRACE_COLOR, "__unset_color\n");
-#endif
 	switch (_cursesi_screen->color_type) {
 	/* Clear ANSI forground and background colours */
 	case COLOR_ANSI:
@@ -629,19 +580,11 @@ __change_pair(short pair)
 
 
 	for (wlp = _cursesi_screen->winlistp; wlp != NULL; wlp = wlp->nextp) {
-#ifdef DEBUG
-		__CTRACE(__CTRACE_COLOR, "__change_pair: win = %p\n",
-		    wlp->winp);
-#endif
 		win = wlp->winp;
 		if (win == __virtscr)
 			continue;
 		else if (win == curscr) {
 			/* Reset colour attribute on curscr */
-#ifdef DEBUG
-			__CTRACE(__CTRACE_COLOR,
-			    "__change_pair: win == curscr\n");
-#endif
 			for (y = 0; y < curscr->maxy; y++) {
 				lp = curscr->alines[y];
 				for (x = 0; x < curscr->maxx; x++) {
@@ -668,14 +611,6 @@ __change_pair(short pair)
 						if (*lp->lastchp < x)
 							*lp->lastchp = x;
 					}
-#ifdef DEBUG
-				if ((win->alines[y]->flags & __ISDIRTY))
-					__CTRACE(__CTRACE_COLOR,
-					    "__change_pair: first = %d, "
-					    "last = %d\n",
-					    *win->alines[y]->firstchp,
-					    *win->alines[y]->lastchp);
-#endif
 			}
 		}
 	}

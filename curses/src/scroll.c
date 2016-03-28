@@ -75,19 +75,12 @@ wscrl(WINDOW *win, int nlines)
 {
 	int     oy, ox;
 
-#ifdef DEBUG
-	__CTRACE(__CTRACE_WINDOW, "wscrl: (%p) lines=%d\n", win, nlines);
-#endif
-
 	if (!(win->flags & __SCROLLOK))
 		return (ERR);
 	if (!nlines)
 		return (OK);
 
 	getyx(win, oy, ox);
-#ifdef DEBUG
-	__CTRACE(__CTRACE_WINDOW, "wscrl: y=%d\n", oy);
-#endif
 	if (oy < win->scr_t || oy > win->scr_b)
 		/* Outside scrolling region */
 		wmove(win, 0, 0);
@@ -101,9 +94,6 @@ wscrl(WINDOW *win, int nlines)
 		__cputchar('\n');
 		if (!__NONL)
 			win->curx = 0;
-#ifdef DEBUG
-		__CTRACE(__CTRACE_WINDOW, "scroll: win == curscr\n");
-#endif
 	}
 	return (OK);
 }

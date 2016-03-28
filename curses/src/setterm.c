@@ -71,9 +71,6 @@ _cursesi_setterm(char *type, SCREEN *screen)
 		if (screen->term == NULL)
 			return ERR;
 	}
-#ifdef DEBUG
-	__CTRACE(__CTRACE_INIT, "setterm: tty = %s\n", type);
-#endif
 
 	/* Try TIOCGWINSZ, and, if it fails, the terminfo entry. */
 	if (ioctl(fileno(screen->outfd), TIOCGWINSZ, &win) != -1 &&
@@ -112,12 +109,6 @@ _cursesi_setterm(char *type, SCREEN *screen)
 	LINES = screen->LINES;
 	COLS = screen->COLS;
 	TABSIZE = screen->TABSIZE;
-
-#ifdef DEBUG
-	__CTRACE(__CTRACE_INIT,
-	    "setterm: LINES = %d, COLS = %d, TABSIZE = %d\n",
-	    LINES, COLS, TABSIZE);
-#endif
 
 	/*
 	 * set the pad char, only take the first char of the pc capability
@@ -259,9 +250,6 @@ does_esc_m(const char *cap)
 	const char *capptr;
 	int seq;
 
-#ifdef DEBUG
-	__CTRACE(__CTRACE_INIT, "does_esc_m: Checking %s\n", cap);
-#endif
 	/* Is it just "\E[m" or "\E[0m"? */
 	if (!strcmp(cap, "\x1b[m") || !strcmp(cap, "\x1b[0m"))
 		return 1;
@@ -328,9 +316,6 @@ does_ctrl_o(const char *exit_cap, const char *acs_cap)
 	const char *eptr = exit_cap, *aptr = acs_cap;
 	int l;
 
-#ifdef DEBUG
-	__CTRACE(__CTRACE_INIT, "does_ctrl_o: Testing %s for %s\n", eptr, aptr);
-#endif
 	l = strlen(acs_cap);
 	while (*eptr != 0) {
 		if (!strncmp(eptr, aptr, l))

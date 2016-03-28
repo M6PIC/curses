@@ -60,11 +60,6 @@ bkgd(chtype ch)
 void
 wbkgdset(WINDOW *win, chtype ch)
 {
-#ifdef DEBUG
-	__CTRACE(__CTRACE_ATTR, "wbkgdset: (%p), '%s', %08x\n",
-	    win, unctrl(ch & +__CHARTEXT), ch & __ATTRIBUTES);
-#endif
-
 	/* Background character. */
 	if (ch & __CHARTEXT)
 		win->bch = (wchar_t) ch & __CHARTEXT;
@@ -83,11 +78,6 @@ int
 wbkgd(WINDOW *win, chtype ch)
 {
 	int	y, x;
-
-#ifdef DEBUG
-	__CTRACE(__CTRACE_ATTR, "wbkgd: (%p), '%s', %08x\n",
-	    win, unctrl(ch & +__CHARTEXT), ch & __ATTRIBUTES);
-#endif
 
 	/* Background attributes (check colour). */
 	if (__using_color && !(ch & __COLOR))
@@ -151,11 +141,6 @@ int wbkgrnd(WINDOW *win, const cchar_t *wch)
 	attr_t battr;
 /* 	nschar_t *np, *tnp, *pnp; */
 
-#ifdef DEBUG
-	__CTRACE(__CTRACE_ATTR, "wbkgrnd: (%p), '%s', %x\n",
-		win, (const char *) wunctrl(wch), wch->attributes);
-#endif
-
 	/* ignore multi-column characters */
 	if ( !wch->elements || wcwidth( wch->vals[ 0 ]) > 1 )
 		return ERR;
@@ -176,11 +161,6 @@ void wbkgrndset(WINDOW *win, const cchar_t *wch)
 	attr_t battr;
 	nschar_t *np, *tnp;
 	int i;
-
-#ifdef DEBUG
-	__CTRACE(__CTRACE_ATTR, "wbkgrndset: (%p), '%s', %x\n",
-		win, (const char *) wunctrl(wch), wch->attributes);
-#endif
 
 	/* ignore multi-column characters */
 	if ( !wch->elements || wcwidth( wch->vals[ 0 ]) > 1 )

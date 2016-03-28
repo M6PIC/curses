@@ -42,9 +42,6 @@
 int
 overwrite(const WINDOW *win1, WINDOW *win2)
 {
-#ifdef DEBUG
-	__CTRACE(__CTRACE_WINDOW, "overwrite: (%p, %p);\n", win1, win2);
-#endif
 	return copywin(win1, win2,
 			win2->begy - win1->begy, win2->begx - win1->begx,
 			0, 0, win2->maxy - 1, win2->maxx - 1, FALSE);

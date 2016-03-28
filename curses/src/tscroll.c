@@ -83,16 +83,6 @@ __parse_cap (char const *cap, ...)
 
 	if (cap == NULL)
 		goto err;
-#ifdef DEBUG
-	{
-		int	i;
-		
-		__CTRACE(__CTRACE_MISC, "__parse_cap: cap = ");
-		for (i = 0; i < strlen(cap); i++)
-			__CTRACE(__CTRACE_MISC, "%s", unctrl(cap[i]));
-		__CTRACE(__CTRACE_MISC, "\n");
-	}
-#endif
 	have_input = 0;
 	for (dp = result; (c = *cap++) != '\0';) {
 		if (c != '%') {
@@ -104,10 +94,6 @@ __parse_cap (char const *cap, ...)
 			if (!have_input) {
 				n = va_arg (ap, int);
 				have_input = 1;
-#ifdef DEBUG
-				__CTRACE(__CTRACE_MISC,
-				    "__parse_cap: %%n, val = %d\n", n);
-#endif
 			}
 			n ^= 0140;
 			continue;
@@ -115,10 +101,6 @@ __parse_cap (char const *cap, ...)
 			if (!have_input) {
 				n = va_arg (ap, int);
 				have_input = 1;
-#ifdef DEBUG
-				__CTRACE(__CTRACE_MISC,
-				    "__parse_cap: %%d, val = %d\n", n);
-#endif
 			}
 			if (n < 10)
 				goto one;
@@ -129,10 +111,6 @@ __parse_cap (char const *cap, ...)
 			if (!have_input) {
 				n = va_arg (ap, int);
 				have_input = 1;
-#ifdef DEBUG
-				__CTRACE(__CTRACE_MISC,
-				    "__parse_cap: %%3, val = %d\n", n);
-#endif
 			}
 			*dp++ = (n / 100) | '0';
 			n %= 100;
@@ -141,10 +119,6 @@ __parse_cap (char const *cap, ...)
 			if (!have_input) {
 				n = va_arg (ap, int);
 				have_input = 1;
-#ifdef DEBUG
-				__CTRACE(__CTRACE_MISC,
-				    "__parse_cap: %%2, val = %d\n", n);
-#endif
 			}
 	two:		*dp++ = n / 10 | '0';
 	one:		*dp++ = n % 10 | '0';
@@ -154,10 +128,6 @@ __parse_cap (char const *cap, ...)
 			if (!have_input) {
 				n = va_arg (ap, int);
 				have_input = 1;
-#ifdef DEBUG
-				__CTRACE(__CTRACE_MISC,
-				    "__parse_cap: %%>, val = %d\n", n);
-#endif
 			}
 			if (n > *cap++)
 				n += *cap++;
@@ -168,10 +138,6 @@ __parse_cap (char const *cap, ...)
 			if (!have_input) {
 				n = va_arg (ap, int);
 				have_input = 1;
-#ifdef DEBUG
-				__CTRACE(__CTRACE_MISC,
-				    "__parse_cap: %%+, val = %d\n", n);
-#endif
 			}
 			n += *cap++;
 			/* FALLTHROUGH */
@@ -179,10 +145,6 @@ __parse_cap (char const *cap, ...)
 			if (!have_input) {
 				n = va_arg (ap, int);
 				have_input = 1;
-#ifdef DEBUG
-				__CTRACE(__CTRACE_MISC,
-				    "__parse_cap: %%., val = %d\n", n);
-#endif
 			}
 			*dp++ = n;
 			have_input = 0;
@@ -191,10 +153,6 @@ __parse_cap (char const *cap, ...)
 			if (!have_input) {
 				n = va_arg (ap, int);
 				have_input = 1;
-#ifdef DEBUG
-				__CTRACE(__CTRACE_MISC,
-				    "__parse_cap: %%i, val = %d\n", n);
-#endif
 			}
 			n++;
 			continue;
@@ -205,10 +163,6 @@ __parse_cap (char const *cap, ...)
 			if (!have_input) {
 				n = va_arg (ap, int);
 				have_input = 1;
-#ifdef DEBUG
-				__CTRACE(__CTRACE_MISC,
-				    "__parse_cap: %%B, val = %d\n", n);
-#endif
 			}
 			n = (n / 10 << 4) + n % 10;
 			continue;
@@ -216,10 +170,6 @@ __parse_cap (char const *cap, ...)
 			if (!have_input) {
 				n = va_arg (ap, int);
 				have_input = 1;
-#ifdef DEBUG
-				__CTRACE(__CTRACE_MISC,
-				    "__parse_cap: %%D, val = %d\n", n);
-#endif
 			}
 			n = n - 2 * (n % 16);
 			continue;

@@ -132,11 +132,6 @@ waddchnstr(WINDOW *win, const chtype *chstr, int n)
 	char	*ocp, *cp, *start;
 	int i, ret, ox, oy;
 
-#ifdef DEBUG
-	__CTRACE(__CTRACE_INPUT, "waddchnstr: win = %p, chstr = %p, n = %d\n",
-	    win, chstr, n);
-#endif
-
 	if (n >= 0)
 		for (chp = chstr, len = 0; n-- && *chp++; ++len);
 	else

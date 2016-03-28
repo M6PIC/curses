@@ -68,11 +68,6 @@ mvwchgat(WINDOW *win , int y, int x, int count, attr_t attr, short color,
 	if (count < 0 || count > win->maxx - x)
 		count = win->maxx - x;
 
-#ifdef DEBUG
-	__CTRACE(__CTRACE_ATTR, "mvwchgat: x: %d y: %d count: %d attr: 0x%x "
-		 "color pair %d\n", x, y, count, (attr & ~__COLOR),
-		 PAIR_NUMBER(color));
-#endif
 	lp = win->alines[y];
 	lc = &lp->line[x];
 

@@ -75,9 +75,6 @@ mvderwin(WINDOW *win, int dy, int dx)
 			*plp->firstchp = x;
 		if (*plp->lastchp < x + win->maxx)
 			*plp->lastchp = x + win->maxx;
-#ifdef DEBUG
-		__CTRACE(__CTRACE_REFRESH, "mvderwin: firstchp = %d, lastchp = %d\n", *plp->firstchp, *plp->lastchp);
-#endif
 	}
 
 	return OK;

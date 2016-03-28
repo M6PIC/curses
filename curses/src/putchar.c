@@ -36,9 +36,6 @@ int
 __cputchar(int ch)
 {
 
-#ifdef DEBUG
-	__CTRACE(__CTRACE_OUTPUT, "__cputchar: %s\n", unctrl(ch));
-#endif
 	return (putc(ch, _cursesi_screen->outfd));
 }
 
@@ -52,19 +49,12 @@ __cputchar_args(int ch, void *args)
 {
 	FILE *outfd = (FILE *) args;
 
-#ifdef DEBUG
-	__CTRACE(__CTRACE_OUTPUT, "__cputchar_args: %s on fd %d\n",
-	    unctrl(ch), outfd->_file);
-#endif
 	return putc(ch, outfd);
 }
 
 int
 __cputwchar(wchar_t wch)
 {
-#ifdef DEBUG
-	__CTRACE(__CTRACE_OUTPUT, "__cputwchar: 0x%x\n", wch);
-#endif
 	return (putwc(wch, _cursesi_screen->outfd));
 }
 
@@ -78,9 +68,5 @@ __cputwchar_args(wchar_t wch, void *args)
 {
 	FILE *outfd = (FILE *) args;
 
-#ifdef DEBUG
-	__CTRACE(__CTRACE_OUTPUT, "__cputwchar_args: 0x%x on fd %d\n",
-	    wch, outfd->_file);
-#endif
 	return putwc(wch, outfd);
 }

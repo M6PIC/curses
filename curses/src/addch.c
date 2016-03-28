@@ -82,12 +82,6 @@ waddch(WINDOW *win, chtype ch)
 
 	__cursesi_chtype_to_cchar(ch, &cc);
 
-#ifdef DEBUG
-	__CTRACE(__CTRACE_INPUT,
-		 "addch: %d : 0x%x (adding char as wide char)\n",
-		 cc.vals[0], cc.attributes);
-#endif
-
 	return (wadd_wch(win, &cc));
 }
 

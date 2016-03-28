@@ -27,7 +27,6 @@ add_library(curses
 	src/color.c
 	src/copywin.c
 	src/cr_put.c
-	src/ctrace.c
 	src/cur_hash.c
 	src/curs_set.c
 	src/curses.c

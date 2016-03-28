@@ -162,11 +162,6 @@ __wgetn_wstr(WINDOW *win, wchar_t *wstr, int n)
 
 	while (wget_wch(win, &wc) != ERR
 	       && wc != L'\n' && wc != L'\r') {
-#ifdef DEBUG
-		__CTRACE(__CTRACE_INPUT,
-		    "__wgetn_wstr: win %p, char 0x%x, remain %d\n",
-		    win, wc, remain);
-#endif
 		*wstr = wc;
 		touchline(win, win->cury, 1);
 		if (wc == ec || wc == KEY_BACKSPACE || wc == KEY_LEFT) {

@@ -45,10 +45,6 @@ delwin(WINDOW *win)
 	struct __winlist *wl, *pwl;
 	SCREEN *screen;
 
-#ifdef DEBUG
-	__CTRACE(__CTRACE_WINDOW, "delwin(%p)\n", win);
-#endif
-
 	if (win == NULL)
 		return (OK);
 

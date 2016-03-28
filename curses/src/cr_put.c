@@ -64,10 +64,6 @@ static int outcol, outline, destcol, destline;
 int
 __mvcur(int ly, int lx, int y, int x, int in_refresh)
 {
-#ifdef DEBUG
-	__CTRACE(__CTRACE_OUTPUT,
-	    "mvcur: moving cursor from (%d, %d) to (%d, %d)\n", ly, lx, y, x);
-#endif
 	destcol = x;
 	destline = y;
 	outcol = lx;
@@ -83,9 +79,6 @@ fgoto(in_refresh)
 	int	 c, l;
 	char	*cgp;
 
-#ifdef DEBUG
-	__CTRACE(__CTRACE_OUTPUT, "fgoto: in_refresh=%d\n", in_refresh);
-#endif /* DEBUG */
 	if (destcol >= COLS) {
 		destline += destcol / COLS;
 		destcol %= COLS;
@@ -162,9 +155,6 @@ fgoto(in_refresh)
 		 * Need this condition due to inconsistent behavior
 		 * of backspace on the last column.
 		 */
-#ifdef DEBUG
-		__CTRACE(__CTRACE_OUTPUT, "fgoto: cgp=%s\n", cgp);
-#endif /* DEBUG */
 		if (outcol != COLS - 1 &&
 		    plod((int) strlen(cgp), in_refresh) > 0)
 			plod(0, in_refresh);
@@ -204,10 +194,6 @@ plod(cnt, in_refresh)
 {
 	int	 i, j, k, soutcol, soutline;
 
-#ifdef DEBUG
-	__CTRACE(__CTRACE_OUTPUT, "plod: cnt=%d, in_refresh=%d\n",
-	    cnt, in_refresh);
-#endif /* DEBUG */
 	plodcnt = plodflg = cnt;
 	soutcol = outcol;
 	soutline = outline;
@@ -406,14 +392,6 @@ dontcr:while (outline < destline) {
 						__cursesi_putnsp(curscr->alines[outline]->line[outcol].nsp,
 								outline,
 								outcol);
-#ifdef DEBUG
-						__CTRACE(__CTRACE_OUTPUT,
-						    "plod: (%d,%d)WCOL(%d), "
-						    "putwchar(%x)\n",
-						    outline, outcol,
-						    WCOL(curscr->alines[outline]->line[outcol]),
-						    curscr->alines[outline]->line[outcol].ch);
-#endif /* DEBUG */
 					/*FALLTHROUGH*/
 					case 0:
 						break;
@@ -438,9 +416,6 @@ out:	if (plodflg) {
 		outcol = soutcol;
 		outline = soutline;
 	}
-#ifdef DEBUG
-	__CTRACE(__CTRACE_OUTPUT, "plod: returns %d\n", plodcnt);
-#endif /* DEBUG */
 	return (plodcnt);
 }
 /*
