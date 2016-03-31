@@ -30,6 +30,7 @@
  */
 
 #include <stdarg.h>
+#include <stdlib.h>
 
 #include "curses.h"
 #include "curses_private.h"
@@ -38,7 +39,7 @@
  * printw and friends.
  */
 
-//static int __winwrite (void *, const char *, int);
+static int __winwrite (void *, const char *, int);
 
 /*
  * printw --
@@ -106,7 +107,7 @@ mvwprintw(WINDOW * win, int y, int x, const char *fmt,...)
 /*
  * Internal write-buffer-to-window function.
  */
-/*static int
+static int
 __winwrite(cookie, buf, n)
 	void   *cookie;
 	const char *buf;
@@ -121,20 +122,34 @@ __winwrite(cookie, buf, n)
 			return (-1);
 	}
 	return (n);
-}*/
+}
 /*
  * vw_printw --
  *	This routine actually executes the printf and adds it to the window.
  */
-/*int
+int
 vw_printw(WINDOW *win, const char *fmt, va_list ap)
 {
-	FILE   *f;
+	/*FILE   *f;
 
 	if ((f = funopen(win, NULL, __winwrite, NULL, NULL)) == NULL)
 		return (ERR);
 	(void) vfprintf(f, fmt, ap);
-	return (fclose(f) ? ERR : OK);
+	return (fclose(f) ? ERR : OK);*/
+
+	va_list aq;
+	va_copy(aq, ap); // Save va_list
+
+	size_t needed = vsnprintf(NULL, 0, fmt, aq);
+	char *buf = malloc(needed);
+	if (!buf) return ERR;
+	vsnprintf(buf, needed, fmt, ap);
+	__winwrite(win, buf, needed);
+
+	va_end(aq);
+
+	return OK;
+
 }
 
-__strong_alias(vwprintw, vw_printw)*/
+//__strong_alias(vwprintw, vw_printw)
