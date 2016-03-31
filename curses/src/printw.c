@@ -145,6 +145,7 @@ vw_printw(WINDOW *win, const char *fmt, va_list ap)
 	if (!buf) return ERR;
 	vsnprintf(buf, needed, fmt, ap);
 	__winwrite(win, buf, needed);
+	free(buf);
 
 	va_end(aq);
 
