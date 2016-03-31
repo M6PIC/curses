@@ -132,7 +132,7 @@ ti_puts(const TERMINAL *term, const char *str, int affcnt,
 	char pc;
 
 	assert(term != NULL);
-	assert(str != NULL);
+	//assert(str != NULL);
 	assert(outc != NULL);
 
 	dodelay = (str == t_bell(term) ||
