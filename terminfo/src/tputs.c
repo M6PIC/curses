@@ -160,7 +160,7 @@ int
 tputs(const char *str, int affcnt, int (*outc)(int))
 {
 
-	assert(str != NULL);
+	//assert(str != NULL);
 	assert(outc != NULL);
 	return _ti_puts(1, ospeed, PC, str, affcnt,
 	    (int (*)(int, void *))outc, NULL);
