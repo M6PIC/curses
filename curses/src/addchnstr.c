@@ -126,7 +126,7 @@ mvwaddchnstr(WINDOW *win, int y, int x, const chtype *chstr, int n)
 int
 waddchnstr(WINDOW *win, const chtype *chstr, int n)
 {
-	size_t  len;
+	int  len;
 	const chtype *chp;
 	attr_t	attr;
 	char	*ocp, *cp, *start;

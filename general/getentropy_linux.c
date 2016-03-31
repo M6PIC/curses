@@ -328,6 +328,8 @@ static const int cl[] = {
 static int
 getentropy_phdr(struct dl_phdr_info *info, size_t size, void *data)
 {
+	(void)size;
+
 	SHA512_CTX *ctx = data;
 
 	SHA512_Update(ctx, &info->dlpi_addr, sizeof (info->dlpi_addr));

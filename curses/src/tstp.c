@@ -57,6 +57,7 @@ static struct sigaction	owsa;
 void
 __stop_signal_handler(/*ARGSUSED*/int signo)
 {
+	(void)signo;
 	sigset_t oset, set;
 
 	/*

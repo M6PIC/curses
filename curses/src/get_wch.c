@@ -71,7 +71,8 @@ static int
 inkey(wchar_t *wc, int to, int delay)
 {
 	wchar_t		 k = 0;
-	int		  c, mapping, ret = 0;
+	int		 mapping, ret = 0;
+	unsigned int c;
 	size_t	  mlen = 0;
 	keymap_t	*current = _cursesi_screen->base_keymap;
 	FILE		*infd = _cursesi_screen->infd;

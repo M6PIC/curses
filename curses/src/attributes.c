@@ -131,6 +131,7 @@ attrset(int attr)
 int
 wattr_get(WINDOW *win, attr_t *attr, short *pair, void *opt)
 {
+	(void)opt;
 	if (attr != NULL) {
 		*attr = win->wattr;
 		*attr &= WA_ATTRIBUTES;
@@ -149,6 +150,7 @@ wattr_get(WINDOW *win, attr_t *attr, short *pair, void *opt)
 int
 wattr_on(WINDOW *win, attr_t attr, void *opt)
 {
+	(void)opt;
 	/* If can enter modes, set the relevent attribute bits. */
 	if (exit_attribute_mode != NULL) {
 		if (attr & __BLINK && enter_blink_mode != NULL)
@@ -196,6 +198,7 @@ wattr_on(WINDOW *win, attr_t attr, void *opt)
 int
 wattr_off(WINDOW *win, attr_t attr, void *opt)
 {
+	(void)opt;
 	/* If can do exit modes, unset the relevent attribute bits. */
 	if (exit_attribute_mode != NULL) {
 		if (attr & __BLINK)
@@ -292,6 +295,7 @@ wattrset(WINDOW *win, int attr)
 int
 wcolor_set(WINDOW *win, short pair, void *opt)
 {
+	(void)opt;
 	__wcolor_set(win, (attr_t) COLOR_PAIR(pair));
 	return OK;
 }

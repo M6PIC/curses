@@ -38,7 +38,7 @@
  * printw and friends.
  */
 
-static int __winwrite (void *, const char *, int);
+//static int __winwrite (void *, const char *, int);
 
 /*
  * printw --
@@ -106,7 +106,7 @@ mvwprintw(WINDOW * win, int y, int x, const char *fmt,...)
 /*
  * Internal write-buffer-to-window function.
  */
-static int
+/*static int
 __winwrite(cookie, buf, n)
 	void   *cookie;
 	const char *buf;
@@ -121,7 +121,7 @@ __winwrite(cookie, buf, n)
 			return (-1);
 	}
 	return (n);
-}
+}*/
 /*
  * vw_printw --
  *	This routine actually executes the printf and adds it to the window.

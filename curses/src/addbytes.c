@@ -264,7 +264,7 @@ int
 _cursesi_addwchar(WINDOW *win, __LINE **lnp, int *y, int *x,
 		  const cchar_t *wch, int char_interp)
 {
-	int sx = 0, ex = 0, cw = 0, i = 0, newx = 0, tabsize;
+	int sx = 0, ex = 0, cw = 0, newx = 0, tabsize;
 	__LDATA *lp = &win->alines[*y]->line[*x], *tp = NULL;
 	nschar_t *np = NULL;
 	cchar_t cc;
@@ -303,7 +303,7 @@ _cursesi_addwchar(WINDOW *win, __LINE **lnp, int *y, int *x,
 			cc.elements = 1;
 			cc.attributes = win->wattr;
 			tabsize = win->screen->TABSIZE;
-			for (i = 0; i < tabsize - (*x % tabsize); i++) {
+			for (int i = 0; i < tabsize - (*x % tabsize); i++) {
 				if (wadd_wch(win, &cc) == ERR)
 					return ERR;
 			}
@@ -318,7 +318,7 @@ _cursesi_addwchar(WINDOW *win, __LINE **lnp, int *y, int *x,
 			lp += cw;
 			*x += cw;
 		}
-		for (i = 0; i < wch->elements; i++) {
+		for (unsigned int i = 0; i < wch->elements; i++) {
 			if (!(np = (nschar_t *) malloc(sizeof(nschar_t))))
 				return ERR;;
 			np->ch = wch->vals[i];
@@ -434,7 +434,7 @@ _cursesi_addwchar(WINDOW *win, __LINE **lnp, int *y, int *x,
 
 
 	if (wch->elements > 1) {
-		for (i = 1; i < wch->elements; i++) {
+		for (unsigned int i = 1; i < wch->elements; i++) {
 			np = (nschar_t *)malloc(sizeof(nschar_t));
 			if (!np)
 				return ERR;;

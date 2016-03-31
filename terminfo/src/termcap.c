@@ -48,6 +48,8 @@ char *BC;
 int
 tgetent(char *bp, const char *name)
 {
+	(void)bp;
+
 	int errret;
 	static TERMINAL *last = NULL;
 

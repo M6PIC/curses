@@ -146,7 +146,7 @@ __wgetn_wstr(WINDOW *win, wchar_t *wstr, int n)
 {
 	wchar_t *ostr, ec, kc, sc[ 2 ];
 	int oldx, remain;
-	wint_t wc;
+	int wc;
 	cchar_t cc;
 
 	ostr = wstr;
@@ -160,7 +160,7 @@ __wgetn_wstr(WINDOW *win, wchar_t *wstr, int n)
 	oldx = win->curx;
 	remain = n - 1;
 
-	while (wget_wch(win, &wc) != ERR
+	while (wget_wch(win, (wint_t *)&wc) != ERR
 	       && wc != L'\n' && wc != L'\r') {
 		*wstr = wc;
 		touchline(win, win->cury, 1);

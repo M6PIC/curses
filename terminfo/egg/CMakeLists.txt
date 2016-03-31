@@ -24,7 +24,6 @@ add_library(terminfo_egg
 	../src/curterm.c
 	../src/term.c
 	../src/termcap.c
-	../src/termcap_map.c
 	../src/ti.c
 	../src/tparm.c
 	../src/tputs.c

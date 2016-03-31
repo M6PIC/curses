@@ -77,7 +77,7 @@ int
 setcchar(cchar_t *wcval, const wchar_t *wch, const attr_t attrs,
 					 short color_pair, const void *opts)
 {
-	int i;
+	unsigned int i;
 	size_t len;
 
 	if (opts || (len = wcslen(wch)) > CCHARW_MAX

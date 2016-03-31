@@ -160,7 +160,7 @@ void wbkgrndset(WINDOW *win, const cchar_t *wch)
 {
 	attr_t battr;
 	nschar_t *np, *tnp;
-	int i;
+	unsigned int i;
 
 	/* ignore multi-column characters */
 	if ( !wch->elements || wcwidth( wch->vals[ 0 ]) > 1 )

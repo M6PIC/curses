@@ -1,3 +1,5 @@
+#define TERMINFO_CTERMS_EGG
+
 struct compiled_term
 {
 	const char *name;

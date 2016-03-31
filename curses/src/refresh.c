@@ -631,7 +631,7 @@ makech(int wy)
 		_cursesi_screen->lx = wx;
 		while ((!cellcmp(nsp, csp) || (wlp->flags & __ISFORCED)) &&
 			wx <= lch) {
-			if (ce != NULL && wx >= nlsp
+			if (ce != NULL && (size_t)wx >= nlsp
 			   && nsp->ch == (wchar_t)btowc((int)' ') /* XXX */
 			   && (nsp->attr & WA_ATTRIBUTES) == lspc) {
 
@@ -659,7 +659,7 @@ makech(int wy)
 						    __COLOR);
 					tputs(clr_eol, 0, __cputchar);
 					_cursesi_screen->lx = wx + win->begx;
-					while (wx++ <= clsp) {
+					while ((size_t)wx++ <= clsp) {
 						csp->attr = lspc;
 						csp->ch = (wchar_t)btowc((int)' ');
 						SET_WCOL( *csp, 1 );
@@ -937,8 +937,9 @@ quickch(void)
 #define THRESH		(int) __virtscr->maxy / 4
 
 	__LINE *clp, *tmp1, *tmp2;
-	int	bsize, curs, curw, starts, startw, i, j;
-	int	n, target, cur_period, bot, top, sc_region;
+	int	bsize, curs, curw, starts, startw, j;
+	unsigned int i;
+	int	n, target, bot, cur_period, top, sc_region;
 	u_int	blank_hash;
 	attr_t	bcolor;
 
@@ -978,7 +979,7 @@ quickch(void)
 	 */
 	bcolor = __virtscr->alines[min(top,
 	    __virtscr->maxy - 1)]->line[0].attr & __COLOR;
-	for (i = top + 1, j = 0; i < bot; i++) {
+	for (i = top + 1, j = 0; i < (unsigned)bot; i++) {
 		if ((__virtscr->alines[i]->line[0].attr & __COLOR) != bcolor) {
 			bcolor = __virtscr->alines[i]->line[__virtscr->maxx].
 			    attr & __COLOR;
@@ -1061,7 +1062,7 @@ done:
 		}
 	}
 
-	if (__virtscr->maxx != last_hash_len) {
+	if ((size_t)__virtscr->maxx != last_hash_len) {
 		blank_hash = 0;
 		for (i = __virtscr->maxx; i > BLANKSIZE; i -= BLANKSIZE) {
 			blank_hash = __hash_more(buf, sizeof(buf), blank_hash);
@@ -1163,6 +1164,7 @@ static void /* ARGSUSED */
 scrolln(starts, startw, curs, bot, top)
 	int	starts, startw, curs, bot, top;
 {
+	(void)curs;
 	int	i, oy, ox, n;
 
 	oy = curscr->cury;
@@ -1406,7 +1408,7 @@ cellcmp( __LDATA *x, __LDATA *y )
 int
 linecmp( __LDATA *xl, __LDATA *yl, size_t len )
 {
-	int i = 0;
+	size_t i = 0;
 	__LDATA *xp = xl, *yp = yl;
 
 	for ( i = 0; i < len; i++, xp++, yp++ ) {

@@ -39,6 +39,7 @@
 int
 meta(/*ARGSUSED*/ WINDOW *win, bool bf)
 {
+	(void)win;
 	if (bf == TRUE) {
 		if (meta_on != NULL) {
 			tputs(meta_on, 0, __cputchar);

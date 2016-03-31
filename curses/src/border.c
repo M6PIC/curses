@@ -97,7 +97,8 @@ int wborder_set(WINDOW *win, const cchar_t *ls, const cchar_t *rs,
 		const cchar_t *tl, const cchar_t *tr,
 		const cchar_t *bl, const cchar_t *br)
 {
-	int	 endy, endx, i, j, k, cw, pcw, tlcw, blcw, trcw, brcw;
+	int	 endy, endx, i, j, cw, pcw, tlcw, blcw, trcw, brcw;
+	unsigned int k;
 	cchar_t left, right, bottom, top, topleft, topright, botleft, botright;
 	nschar_t *np, *tnp;
 
@@ -249,7 +250,7 @@ int wborder_set(WINDOW *win, const cchar_t *ls, const cchar_t *rs,
 		}
 		if ( pcw != 1 ) {
 			k = pcw < 0 ? endx -cw + pcw : endx - cw;
-			for ( j = endx - cw; j >= k; j-- ) {
+			for ( j = endx - cw; j >= (signed)k; j-- ) {
 				win->alines[i]->line[j].ch
 					= (wchar_t)btowc(win->bch);
 				if (_cursesi_copy_nsp(win->bnsp,

@@ -102,7 +102,7 @@ start_color(void)
 			COLOR_PAIRS = 0;
 			COLORS = 0;
 		} else {
-			COLOR_PAIRS = (max_pairs > MAX_PAIRS - 1 ?
+			COLOR_PAIRS = ((unsigned int)max_pairs > MAX_PAIRS - 1 ?
 			    MAX_PAIRS - 1 : max_pairs);
 			 /* Use the last colour pair for curses default. */
 			__default_color = COLOR_PAIR(MAX_PAIRS - 1);
@@ -472,6 +472,7 @@ no_color_attributes(void)
 void
 __set_color( /*ARGSUSED*/ WINDOW *win, attr_t attr)
 {
+	(void)win;
 	short	pair;
 
 	if ((curscr->wattr & __COLOR) == (attr & __COLOR))

@@ -468,6 +468,7 @@ qiflush(void)
 int
 intrflush(WINDOW *win, bool bf)	/*ARGSUSED*/
 {
+	(void)win;
 	/* Check if we need to restart ... */
 	if (_cursesi_screen->endwin)
 		__restartwin();

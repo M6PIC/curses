@@ -132,7 +132,8 @@ wadd_wchnstr(WINDOW *win, const cchar_t *wchstr, int n)
 {
 	const cchar_t *chp;
 	wchar_t wc;
-	int cw, x, y, sx, ex, newx, i, cnt;
+	int cw, x, y, sx, ex, newx, cnt;
+	unsigned int i;
 	__LDATA *lp, *tp;
 	nschar_t *np, *tnp;
 	__LINE *lnp;

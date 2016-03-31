@@ -425,12 +425,14 @@ int
 _ti_getterm(TERMINAL *term, const char *name, int flags)
 {
 	int r;
-	size_t i;
-	const struct compiled_term *t;
-
+	
 	r = _ti_findterm(term, name, flags);
 	if (r == 1)
 		return r;
+
+#ifndef TERMINFO_CTERMS_EGG
+	size_t i;
+	const struct compiled_term *t;
 
 	for (i = 0; i < (sizeof(compiled_terms) / sizeof(compiled_terms[0])); i++) {
 		t = &compiled_terms[i];
@@ -439,6 +441,7 @@ _ti_getterm(TERMINAL *term, const char *name, int flags)
 			break;
 		}
 	}
+#endif
 
 	return r;
 }

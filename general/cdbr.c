@@ -99,6 +99,7 @@ struct cdbr {
 static void
 cdbr_unmap(void *cookie, void *base, size_t size)
 {
+	(void)cookie;
 	munmap(base, size);
 }
 
@@ -144,6 +145,7 @@ struct cdbr *
 cdbr_open_mem(void *base, size_t size, int flags,
     void (*unmap)(void *, void *, size_t), void *cookie)
 {
+	(void)flags;
 	struct cdbr *cdbr;
 	uint8_t *buf = base;
 	if (size < 40 || memcmp(buf, "NBCDB\n\0\001", 8)) {

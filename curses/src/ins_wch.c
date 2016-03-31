@@ -82,7 +82,8 @@ wins_wch(WINDOW *win, const cchar_t *wch)
 {
 	__LDATA	*start, *temp1, *temp2;
 	__LINE *lnp;
-	int cw, pcw, x, y, sx, ex, newx, i, tabsize;
+	int cw, pcw, x, y, sx, ex, newx, tabsize;
+	unsigned int i;
 	nschar_t *np, *tnp;
 	wchar_t ws[] = L"		";
 

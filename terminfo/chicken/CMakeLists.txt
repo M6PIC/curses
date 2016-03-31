@@ -28,7 +28,6 @@ add_library(terminfo
 	../src/curterm.c
 	../src/term.c
 	../src/termcap.c
-	../src/termcap_map.c
 	../src/ti.c
 	../src/tparm.c
 	../src/tputs.c

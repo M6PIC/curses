@@ -55,6 +55,7 @@ int
 mvwchgat(WINDOW *win , int y, int x, int count, attr_t attr, short color,
     const void *opts)
 {
+	(void)opts;
 	__LINE *lp;
 	__LDATA *lc;
 
