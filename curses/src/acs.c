@@ -70,18 +70,18 @@ __init_acs(SCREEN *screen)
 	ACS_PLMINUS = '#';
 	ACS_BOARD = '#';
 	ACS_LANTERN = '#';
-/*	ACS_LRCORNER = '+';	*/
-/*	ACS_URCORNER = '+';	*/
-/*	ACS_ULCORNER = '+';	*/
-/*	ACS_LLCORNER = '+';	*/
-/*	ACS_PLUS = '+';		*/
+	ACS_LRCORNER = '+';	
+	ACS_URCORNER = '+';	
+	ACS_ULCORNER = '+';	
+	ACS_LLCORNER = '+';	
+	ACS_PLUS = '+';		
 	ACS_HLINE = '-';
 	ACS_S1 = '-';
 	ACS_S9 = '_';
-/*	ACS_LTEE = '+';		*/
-/*	ACS_RTEE = '+';		*/
-/*	ACS_BTEE = '+';		*/
-/*	ACS_TTEE = '+';		*/
+	ACS_LTEE = '+';		
+	ACS_RTEE = '+';		
+	ACS_BTEE = '+';		
+	ACS_TTEE = '+';		
 	ACS_VLINE = '|';
 	ACS_BULLET = 'o';
 	/* Add the extensions defaults */
